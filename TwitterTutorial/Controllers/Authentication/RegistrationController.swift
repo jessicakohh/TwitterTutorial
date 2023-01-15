@@ -10,6 +10,8 @@ import UIKit
 class RegistrationController: UIViewController {
     
     // MARK: - Properties
+    private let imagePicker = UIImagePickerController()
+    
     private let plusPhotoButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "plus_photo"), for: .normal)
@@ -88,13 +90,13 @@ class RegistrationController: UIViewController {
     }
     
     // MARK: - Selectors
-    
-    @objc func handleRegistration() {
-        
+
+    @objc func handleAddProfilePhoto() {
+        present(imagePicker, animated: true, completion: nil)
     }
     
-    @objc func handleAddProfilePhoto() {
-        print("뽀로")
+    @objc func handleRegistration() {
+        print("가입버튼 누름")
     }
     
     @objc func handleShowLogin() {
@@ -104,6 +106,9 @@ class RegistrationController: UIViewController {
     // MARK: - Helpers
     func configureUI() {
         view.backgroundColor = .twitterBlue
+        
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
         
         // 스택 뷰
         view.addSubview(plusPhotoButton)
@@ -137,3 +142,26 @@ class RegistrationController: UIViewController {
 
 }
 
+
+// MARK: - UIImagePickerControllerDelegate
+
+extension RegistrationController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let profileImage = info[.editedImage] as? UIImage else { return }
+        
+        plusPhotoButton.layer.cornerRadius = 128 / 2
+        plusPhotoButton.layer.masksToBounds = true
+        plusPhotoButton.imageView?.contentMode = .scaleAspectFill
+        // 프레임 범위를 벗어나지 않도록 한다
+        plusPhotoButton.imageView?.clipsToBounds = true
+        plusPhotoButton.layer.borderColor = UIColor.white.cgColor
+        plusPhotoButton.layer.borderWidth = 3
+        
+        self.plusPhotoButton.setImage(profileImage.withRenderingMode(.alwaysOriginal), for: .normal)
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
+}
