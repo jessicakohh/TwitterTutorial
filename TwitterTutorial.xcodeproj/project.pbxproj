@@ -18,6 +18,9 @@
 		C87D21542970C62F006A4531 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C87D21522970C62F006A4531 /* Main.storyboard */; };
 		C87D21562970C630006A4531 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C87D21552970C630006A4531 /* Assets.xcassets */; };
 		C87D21592970C630006A4531 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C87D21572970C630006A4531 /* LaunchScreen.storyboard */; };
+		C8A1632A2973DB7C00DF473D /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A163292973DB7C00DF473D /* LoginController.swift */; };
+		C8A1632C2973DC0400DF473D /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A1632B2973DC0400DF473D /* RegistrationController.swift */; };
+		C8A1632F2973EAE400DF473D /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A1632E2973EAE400DF473D /* Utilities.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +37,9 @@
 		C87D21552970C630006A4531 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C87D21582970C630006A4531 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C87D215A2970C630006A4531 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C8A163292973DB7C00DF473D /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		C8A1632B2973DC0400DF473D /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
+		C8A1632E2973EAE400DF473D /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +57,7 @@
 			isa = PBXGroup;
 			children = (
 				C86017AD29710D9800E9FBA1 /* Extensions.swift */,
+				C8A1632E2973EAE400DF473D /* Utilities.swift */,
 			);
 			path = Utilies;
 			sourceTree = "<group>";
@@ -74,13 +81,13 @@
 		C87D214B2970C62F006A4531 /* TwitterTutorial */ = {
 			isa = PBXGroup;
 			children = (
+				C87D214C2970C62F006A4531 /* AppDelegate.swift */,
+				C87D214E2970C62F006A4531 /* SceneDelegate.swift */,
 				C87D21602970C77C006A4531 /* Model */,
 				C87D21612970C798006A4531 /* View */,
 				C87D21632970C7AA006A4531 /* Controllers */,
 				C87D21642970C7AE006A4531 /* API */,
 				C86017AC29710D8C00E9FBA1 /* Utilies */,
-				C87D214C2970C62F006A4531 /* AppDelegate.swift */,
-				C87D214E2970C62F006A4531 /* SceneDelegate.swift */,
 				C87D21522970C62F006A4531 /* Main.storyboard */,
 				C87D21552970C630006A4531 /* Assets.xcassets */,
 				C87D21572970C630006A4531 /* LaunchScreen.storyboard */,
@@ -106,6 +113,7 @@
 		C87D21632970C7AA006A4531 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				C8A1632D2973DD4F00DF473D /* Authentication */,
 				C85020B82970CB7A0022ACF0 /* MainTabController.swift */,
 				C85020BA2970CD450022ACF0 /* FeedController.swift */,
 				C85020BC2970CD880022ACF0 /* ExploreController.swift */,
@@ -120,6 +128,15 @@
 			children = (
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		C8A1632D2973DD4F00DF473D /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				C8A163292973DB7C00DF473D /* LoginController.swift */,
+				C8A1632B2973DC0400DF473D /* RegistrationController.swift */,
+			);
+			path = Authentication;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -195,8 +212,11 @@
 			files = (
 				C85020BF2970CD9A0022ACF0 /* NotificationsController.swift in Sources */,
 				C87D214D2970C62F006A4531 /* AppDelegate.swift in Sources */,
+				C8A1632C2973DC0400DF473D /* RegistrationController.swift in Sources */,
 				C85020BD2970CD880022ACF0 /* ExploreController.swift in Sources */,
+				C8A1632F2973EAE400DF473D /* Utilities.swift in Sources */,
 				C86017AE29710D9800E9FBA1 /* Extensions.swift in Sources */,
+				C8A1632A2973DB7C00DF473D /* LoginController.swift in Sources */,
 				C87D214F2970C62F006A4531 /* SceneDelegate.swift in Sources */,
 				C85020B92970CB7A0022ACF0 /* MainTabController.swift in Sources */,
 				C85020C12970CDB00022ACF0 /* ConversationController.swift in Sources */,
