@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 class MainTabController: UITabBarController {
     
@@ -20,16 +21,44 @@ class MainTabController: UITabBarController {
         return button
     }()
     
+
     
     // MARK: - LifeCycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureViewControllers()
-        configureUI()
+        view.backgroundColor = .twitterBlue
+//        logUserOut()
+        authenticateUserAndConfigureUI()
     }
     
+    // MARK: - API
+    // 사용자가 로그인했는지 확인
+    func authenticateUserAndConfigureUI() {
+        if Auth.auth().currentUser == nil {
+            // 동기화를 만든 메인 스레드에서 수행되어야 함
+            DispatchQueue.main.async {
+                let nav = UINavigationController(rootViewController: LoginController())
+                nav.modalPresentationStyle = .fullScreen
+                self.present(nav, animated: true, completion: nil)
+            }
+            print("DEBUG: User is not logged in / 사용자가 로그인하지 않았습니다")
+        } else {
+            configureViewControllers()
+            configureUI()
+            print("DEBUG: User is logged in / 사용자가 로그인하였습니다")
+        }
+    }
+    
+    func logUserOut() {
+        do {
+            try Auth.auth().signOut()
+        } catch let error {
+            print("DEBUG: Failed to sign out with error \(error.localizedDescription)")
+        }
+    }
+
     // MARK: - Selectors
     
     @objc func actionButtonTapped() {
