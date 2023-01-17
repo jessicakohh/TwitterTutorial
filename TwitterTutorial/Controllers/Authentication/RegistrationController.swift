@@ -6,7 +6,9 @@
 //
 
 import UIKit
-import Firebase
+import FirebaseStorage
+import FirebaseDatabase
+import FirebaseAuth
 
 class RegistrationController: UIViewController {
     

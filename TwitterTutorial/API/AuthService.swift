@@ -6,7 +6,9 @@
 //
 
 import UIKit
-import Firebase
+import FirebaseStorage
+import FirebaseDatabase
+import FirebaseAuth
 
 struct AuthCredentials {
     let email: String
@@ -20,6 +22,11 @@ struct AuthCredentials {
 // 모든 서비스중지를 shared라고 부를 때 마다 이 특정 인스턴스를 사용할 것 
 struct AuthService {
     static let shared = AuthService()
+    
+    func logUserIn(withEmail email: String, password: String, completion: @escaping(AuthDataResult?, Error?) -> Void) {
+        print("DEBUG: Email: \(email), password: \(password)")
+        Auth.auth().signIn(withEmail: email, password: password, completion: completion)
+    }
     
     func registerUser(credentials: AuthCredentials,
                       completion: @escaping(Error?, DatabaseReference) -> Void) {

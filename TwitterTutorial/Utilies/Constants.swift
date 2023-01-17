@@ -7,7 +7,9 @@
 
 
 // 데이터베이스를 추가하고 싶을 때 이 상수 파일로 이동하여 다른 참조를 만들면 됨
-import Firebase
+import FirebaseStorage
+import FirebaseDatabase
+import FirebaseAuth
 
 let STORAGE_REF = Storage.storage().reference()
 let STORAGE_PROFILE_IMAGES = STORAGE_REF.child("profile_images")

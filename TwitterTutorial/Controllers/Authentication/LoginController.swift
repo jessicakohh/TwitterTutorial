@@ -76,7 +76,17 @@ class LoginController: UIViewController {
     
     // 서비스 담당자를 호출할 로그인 기능
     @objc func handleLogin() {
-        print("Handle Login here / 여기서 로그인 처리")
+//        print("Handle Login here / 여기서 로그인 처리")
+        guard let email = emailTextField.text else { return }
+        guard let password = passwordTextField.text else { return }
+        
+        AuthService.shared.logUserIn(withEmail: email, password: password) { (result, error) in
+            if let error = error {
+                print("DEBUG: Error logging in \(error.localizedDescription)")
+                return
+            }
+            print("DEBUG: Successful log in / 로그인 성공")
+        }
     }
     
 

@@ -6,7 +6,9 @@
 //
 
 import UIKit
-import Firebase
+import FirebaseStorage
+import FirebaseDatabase
+import FirebaseAuth
 
 class MainTabController: UITabBarController {
     
@@ -28,10 +30,11 @@ class MainTabController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        logUserOut()
         view.backgroundColor = .twitterBlue
-//        logUserOut()
-        authenticateUserAndConfigureUI()
+//        authenticateUserAndConfigureUI()
     }
+    
     
     // MARK: - API
     // 사용자가 로그인했는지 확인
@@ -47,13 +50,14 @@ class MainTabController: UITabBarController {
         } else {
             configureViewControllers()
             configureUI()
-            print("DEBUG: User is logged in / 사용자가 로그인하였습니다")
+            print("DEBUG: User is logged in / 사용자 로그인")
         }
     }
     
     func logUserOut() {
         do {
             try Auth.auth().signOut()
+            print("DEBUG: Did log user out / 사용자 로그아웃")
         } catch let error {
             print("DEBUG: Failed to sign out with error \(error.localizedDescription)")
         }
