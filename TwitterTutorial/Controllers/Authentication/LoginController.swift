@@ -86,6 +86,11 @@ class LoginController: UIViewController {
                 return
             }
             print("DEBUG: Successful log in / 로그인 성공")
+            // 해당 사용자를 성공적으로 등록하고 생성하면 이 등록을 취소
+            guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow}) else { return }
+            guard let tab = window.rootViewController as? MainTabController else { return }
+            tab.authenticateUserAndConfigureUI()
+            self.dismiss(animated: true, completion: nil)
         }
     }
     
