@@ -74,8 +74,9 @@ class LoginController: UIViewController {
     }
     
     
+    // 서비스 담당자를 호출할 로그인 기능
     @objc func handleLogin() {
-        print("Handle Login here...")
+        print("Handle Login here / 여기서 로그인 처리")
     }
     
 

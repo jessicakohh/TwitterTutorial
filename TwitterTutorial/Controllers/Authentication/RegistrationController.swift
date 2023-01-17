@@ -99,7 +99,7 @@ class RegistrationController: UIViewController {
     
     @objc func handleRegistration() {
         guard let profileImage = profileImage else {
-            print("DEBUG: Please select a profile image...")
+            print("DEBUG: Please select a profile image / 프로필 이미지를 선택하십시오")
             return
         }
         guard let email = emailTextField.text else { return }
@@ -107,37 +107,19 @@ class RegistrationController: UIViewController {
         guard let fullname = fullnameTextField.text else { return }
         guard let username = usernameTextField.text else { return }
         
-        guard let imageData = profileImage.jpegData(compressionQuality: 0.3) else { return }
-        let firename = NSUUID().uuidString
-        let storageRef = STORAGE_PROFILE_IMAGES.child("profile_images")
-                
+        let credentials = AuthCredentials(email: email,
+                                          password: password,
+                                          fullname: fullname,
+                                          username: username,
+                                          profileImage: profileImage)
         
-        storageRef.putData(imageData, metadata: nil) { (meta, error) in
-            storageRef.downloadURL { (url, error) in
-                guard let profileImageUrl = url?.absoluteString else { return }
-                
-                Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
-                    if let error = error {
-                        print("DEBUG: Error is \(error.localizedDescription)")
-                        return
-                    }
-                    
-                    guard let uid = result?.user.uid else { return }
-                    
-                    let values = ["email": email,
-                                  "username": username,
-                                  "fullname": fullname,
-                                  "profileImageUrl": profileImageUrl]
-                    
-                    //            let ref = Database.database().reference().child("users").child(uid)
-                    //            let ref = DB_REF.child("users").child(uid)
-                    DB_REF.child(uid).updateChildValues(values) { (error, ref) in
-                        print("DEBUG: Successfully updated user information")
-                    }
-                }
-            }
+        AuthService.shared.registerUser(credentials: credentials) { (error, ref) in
+            print("DEBUG: Sign up succesfull / 가입 성공")
+            print("DEBUG: Handle update user interface here / 여기서 업데이트 사용자 인터페이스 처리")
         }
+        
     }
+       
     
     @objc func handleShowLogin() {
         navigationController?.popViewController(animated: true)
