@@ -14,6 +14,18 @@ class MainTabController: UITabBarController {
     
     // MARK: - Properties
     
+    var user: User? {
+        // 속성이 가져오면 무언가를 할 수 있게 해주는 관찰자
+        didSet {
+            print("DEBUG : Did set user in main tab / 기본탭에서 사용자 설정")
+            guard let nav = viewControllers?[0] as? UINavigationController else { return }
+            guard let feed = nav.viewControllers.first as? FeedController else { return }
+            
+            feed.user = user
+        }
+    }
+    
+    
     let actionButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = .white
@@ -39,8 +51,13 @@ class MainTabController: UITabBarController {
     // MARK: - API
     
     // Firebase에서 사용자 데이터 가져오기
+    // 이 기능을 호출 할 때 실제로 가지고 있는 사용자에 엑세스할 수 있어야 함
+    // 가져온 다음 계속해서 해당 사용자를 FeedController로 전달해야 함
     func fetchUser() {
-        UserService.shared.fetchUser()
+        UserService.shared.fetchUser { user in
+            print("DEBUG : Main tab user is \(user.username)")
+            self.user = user
+        }
     }
     
     // 사용자가 로그인했는지 확인
