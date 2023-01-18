@@ -24,6 +24,7 @@
 		C8A1632C2973DC0400DF473D /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A1632B2973DC0400DF473D /* RegistrationController.swift */; };
 		C8A1632F2973EAE400DF473D /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A1632E2973EAE400DF473D /* Utilities.swift */; };
 		C8A163312974160100DF473D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C8A163302974160100DF473D /* GoogleService-Info.plist */; };
+		C8AE38022977A1E100B3F371 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AE38012977A1E100B3F371 /* UserService.swift */; };
 		FEE8435364F9CACBF364B9DD /* Pods_TwitterTutorial.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFBDE1347421EBF9B4923F1F /* Pods_TwitterTutorial.framework */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +50,7 @@
 		C8A1632B2973DC0400DF473D /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
 		C8A1632E2973EAE400DF473D /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		C8A163302974160100DF473D /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		C8AE38012977A1E100B3F371 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		EFBDE1347421EBF9B4923F1F /* Pods_TwitterTutorial.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TwitterTutorial.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -159,6 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				C826B6EE29767C8100667813 /* AuthService.swift */,
+				C8AE38012977A1E100B3F371 /* UserService.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -288,6 +291,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8AE38022977A1E100B3F371 /* UserService.swift in Sources */,
 				C85020BF2970CD9A0022ACF0 /* NotificationsController.swift in Sources */,
 				C87D214D2970C62F006A4531 /* AppDelegate.swift in Sources */,
 				C8A1632C2973DC0400DF473D /* RegistrationController.swift in Sources */,

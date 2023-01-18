@@ -37,6 +37,12 @@ class MainTabController: UITabBarController {
     
     
     // MARK: - API
+    
+    // Firebase에서 사용자 데이터 가져오기
+    func fetchUser() {
+        UserService.shared.fetchUser()
+    }
+    
     // 사용자가 로그인했는지 확인
     func authenticateUserAndConfigureUI() {
         if Auth.auth().currentUser == nil {
@@ -50,6 +56,7 @@ class MainTabController: UITabBarController {
         } else {
             configureViewControllers()
             configureUI()
+            fetchUser()
             print("DEBUG: User is logged in / 사용자 로그인")
         }
     }
