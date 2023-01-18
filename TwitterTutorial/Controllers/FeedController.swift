@@ -14,7 +14,6 @@ class FeedController: UIViewController {
 
     // 1. 사용자가 설정되면 이것이 실행된다
     // 2. 모델에서 무언기를 변환했는지 확인한다
-    // 3. 
     var user: User? {
         didSet {
             print("DEBUG: Did set user in feed controller / FeedController에서 사용자를 설정 했습니까")
@@ -38,6 +37,7 @@ class FeedController: UIViewController {
         
         let imageView = UIImageView(image: UIImage(named: "twitter_logo_blue"))
         imageView.contentMode = .scaleAspectFit
+        imageView.setDimensions(width: 44, height: 44)
         navigationItem.titleView = imageView
     }
     
