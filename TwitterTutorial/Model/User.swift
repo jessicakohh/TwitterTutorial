@@ -13,7 +13,7 @@ struct User {
     let fullname: String
     let email: String
     let username: String
-    let profileImageUrl: String
+    var profileImageUrl: URL?
     let uid: String
     
     // 자신의 초기화를 작성하교 유형이 될 이 딕셔너리를 전달
@@ -25,6 +25,11 @@ struct User {
         self.fullname = dictionary["fullname"] as? String ?? ""
         self.email = dictionary["email"] as? String ?? ""
         self.username = dictionary["username"] as? String ?? ""
-        self.profileImageUrl = dictionary["profileImageUrl"] as? String ?? ""
+        
+        if let profileImageUrlString = dictionary["profileImageUrl"] as? String {
+            guard let url = URL(string: profileImageUrlString) else { return }
+            self.profileImageUrl = url
+            
+        }
     }
 }
