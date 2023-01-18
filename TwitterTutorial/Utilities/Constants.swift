@@ -17,4 +17,4 @@ let STORAGE_PROFILE_IMAGES = STORAGE_REF.child("profile_images")
 // 전역 상수, 앱 내 어디서나 액세스 할 수 있도록 전역으로 만듬
 let DB_REF = Database.database().reference()
 let REF_USERS = DB_REF.child("users")
-
+let REF_TWEETS = DB_REF.child("tweets")
