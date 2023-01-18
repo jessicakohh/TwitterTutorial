@@ -25,6 +25,7 @@
 		C8A1632F2973EAE400DF473D /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A1632E2973EAE400DF473D /* Utilities.swift */; };
 		C8A163312974160100DF473D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C8A163302974160100DF473D /* GoogleService-Info.plist */; };
 		C8AE38022977A1E100B3F371 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AE38012977A1E100B3F371 /* UserService.swift */; };
+		C8AE38042977C23E00B3F371 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AE38032977C23E00B3F371 /* User.swift */; };
 		FEE8435364F9CACBF364B9DD /* Pods_TwitterTutorial.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFBDE1347421EBF9B4923F1F /* Pods_TwitterTutorial.framework */; };
 /* End PBXBuildFile section */
 
@@ -51,6 +52,7 @@
 		C8A1632E2973EAE400DF473D /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		C8A163302974160100DF473D /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		C8AE38012977A1E100B3F371 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		C8AE38032977C23E00B3F371 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		EFBDE1347421EBF9B4923F1F /* Pods_TwitterTutorial.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TwitterTutorial.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -133,6 +135,7 @@
 		C87D21602970C77C006A4531 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				C8AE38032977C23E00B3F371 /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -299,6 +302,7 @@
 				C8A1632F2973EAE400DF473D /* Utilities.swift in Sources */,
 				C86017AE29710D9800E9FBA1 /* Extensions.swift in Sources */,
 				C826B6EF29767C8100667813 /* AuthService.swift in Sources */,
+				C8AE38042977C23E00B3F371 /* User.swift in Sources */,
 				C8A1632A2973DB7C00DF473D /* LoginController.swift in Sources */,
 				C87D214F2970C62F006A4531 /* SceneDelegate.swift in Sources */,
 				C85020B92970CB7A0022ACF0 /* MainTabController.swift in Sources */,
