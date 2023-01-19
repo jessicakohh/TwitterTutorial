@@ -24,7 +24,7 @@ struct TweetService {
         REF_TWEETS.childByAutoId().updateChildValues(values, withCompletionBlock: completion)
     }
     
-    // 트윗을 가져오는 서비스
+    // 데이터베이스에서 트윗을 가져오기 위한 함수
     func fetchTweets(completion: @escaping([Tweet]) -> Void) {
         var tweets = [Tweet]()
         
