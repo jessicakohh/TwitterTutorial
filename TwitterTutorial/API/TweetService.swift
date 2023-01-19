@@ -22,6 +22,20 @@ struct TweetService {
         
         // 고유 식별자를 자동으로 생성, 사용자를 생성하고 고유 식별자를 추가한다음 모든 항목을 업로드
         REF_TWEETS.childByAutoId().updateChildValues(values, withCompletionBlock: completion)
+    }
+    
+    // 트윗을 가져오는 서비스
+    func fetchTweets(completion: @escaping([Tweet]) -> Void) {
+        var tweets = [Tweet]()
         
+        REF_TWEETS.observe(.childAdded) { snapshot in
+            guard let dictionary = snapshot.value as? [String: Any] else { return }
+            
+            // 스냅샷과 Firebase의 tweetID가 같
+            let tweetID = snapshot.key
+            let tweet = Tweet(tweetID: tweetID, dictionary: dictionary)
+            tweets.append(tweet)
+            completion(tweets)
+        }
     }
 }
