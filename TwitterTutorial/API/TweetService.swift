@@ -25,6 +25,8 @@ struct TweetService {
     }
     
     // 데이터베이스에서 트윗을 가져오기 위한 함수
+    // 이 함수에 트윗배열이 있는것을 알 수 있음.
+    // 모든 배열에는 개수 속성이 있어 해당 배열에 얼마나 많은 항목이 있는지 알려줌
     func fetchTweets(completion: @escaping([Tweet]) -> Void) {
         var tweets = [Tweet]()
         

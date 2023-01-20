@@ -13,7 +13,7 @@ private let reuseIdentifier = "TweetCell"
 class FeedController: UICollectionViewController {
     
     // MARK: - Properties
-
+    
     // 1. 사용자가 설정되면 이것이 실행된다
     // 2. 모델에서 무언기를 변환했는지 확인한다
     var user: User? {
@@ -22,6 +22,14 @@ class FeedController: UICollectionViewController {
             configureLeftBarButton()
         }
     }
+    
+    // 뷰가 로드되자마자는 빈 배열일것임, 따라서 이 데이터 가져오기를 완료하고 결과로 이 트윗 배열을 실제로 저장하는데 시간이 걸림
+    private var tweets = [Tweet]() {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
+    
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
@@ -34,7 +42,8 @@ class FeedController: UICollectionViewController {
     // MARK: - API
     func fetchTweets() {
         TweetService.shared.fetchTweets { tweets in
-            print("DEBUG : Tweets are \(tweets)")
+            // 트윗 수 몇개
+            self.tweets = tweets
         }
     }
     
@@ -68,12 +77,12 @@ class FeedController: UICollectionViewController {
     }
 }
 
-
-// MARK: - CollectionView
+// MARK: - UICollectionViewDelegate / DataSource
 
 extension FeedController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        print("DEBUG: Tweet count at time of collectionView function call is \(tweets.count)")
+        return tweets.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -81,6 +90,9 @@ extension FeedController {
         return cell
     }
 }
+
+
+// MARK: - UICollectionViewDelegateFlowLayout
 
 extension FeedController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
