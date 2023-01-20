@@ -100,6 +100,7 @@ class LoginController: UIViewController {
         view.backgroundColor = .twitterBlue
         navigationController?.navigationBar.barStyle = .default
         navigationController?.navigationBar.isHidden = true
+    
         
         view.addSubview(logoImageView)
         logoImageView.centerX(inView: view,

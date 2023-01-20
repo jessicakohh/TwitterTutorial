@@ -13,7 +13,6 @@ import FirebaseAuth
 class MainTabController: UITabBarController {
     
     // MARK: - Properties
-    
     var user: User? {
         // 속성이 가져오면 무언가를 할 수 있게 해주는 관찰자
         didSet {
@@ -114,7 +113,7 @@ class MainTabController: UITabBarController {
     
     func configureViewControllers() {
         
-        let feed = FeedController(collectionViewLayout: UICollectionViewLayout())
+        let feed = FeedController(collectionViewLayout: UICollectionViewFlowLayout())
         let nav1 = templateNavigationController(image: UIImage(named: "home_unselected"), rootViewController: feed)
         
         let explore = ExploreController()
