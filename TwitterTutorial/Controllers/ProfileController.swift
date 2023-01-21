@@ -24,7 +24,12 @@ class ProfileController: UICollectionViewController {
     // 이 뷰가 나타나려고 할 때마다 네비게이션 바의 hidden 속성을 true로 설정
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.navigationBar.barStyle = .black
         navigationController?.navigationBar.isHidden = true
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
     // MARK: - Helpers
