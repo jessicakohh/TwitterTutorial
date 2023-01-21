@@ -99,6 +99,10 @@ extension FeedController {
         
         return cell
     }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+    }
 }
 
 
@@ -111,13 +115,12 @@ extension FeedController: UICollectionViewDelegateFlowLayout {
 }
 
 
-
 // MARK: - TweetCellDelegate
 
 extension FeedController: TweetCellDelegate {
     func handleProfileImageTapped(_ cell: TweetCell) {
         print("DEBUG : Handle profile image tapped in controller / 컨트롤러에서 탭된 프로필 이미지")
-        let controller = ProfileController(collectionViewLayout: UICollectionViewLayout())
+        let controller = ProfileController(collectionViewLayout: UICollectionViewFlowLayout())
         navigationController?.pushViewController(controller, animated: true)
     }
 }
