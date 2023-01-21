@@ -107,7 +107,8 @@ class RegistrationController: UIViewController {
         guard let email = emailTextField.text else { return }
         guard let password = passwordTextField.text else { return }
         guard let fullname = fullnameTextField.text else { return }
-        guard let username = usernameTextField.text else { return }
+        // 데이터베이스에 업로드 될 때 사용자 이름이 항상 소문자인지 확인 
+        guard let username = usernameTextField.text?.lowercased() else { return }
         
         let credentials = AuthCredentials(email: email,
                                           password: password,

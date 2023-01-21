@@ -107,6 +107,5 @@ class UploadTweetController: UIViewController {
                                                            action: #selector(handleCancel))
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: actionButton)
-        navigationController?.navigationBar.backgroundColor = .red
     }
 }
