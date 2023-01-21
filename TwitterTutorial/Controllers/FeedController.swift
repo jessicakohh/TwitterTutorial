@@ -92,6 +92,9 @@ extension FeedController {
         // 트윗 데이터소스 : 0 인덱스에 하나, 인덱스에 하나, ~ ~ 이렇게 요소가 들어감
         // indexPath.row 경로를 사용하여 트윗 데이터 소스 배열에서 원하는 요소에 엑세스
         print("DEBUG: Index path is \(indexPath.row) / 인덱스 경로")
+        
+        // ⭐️ 이 피드 컨트롤러가 해당 프로토콜을 준수하기 때문에 위임이 self와 같다고 판단
+        cell.delegate = self
         cell.tweet = tweets[indexPath.row]
         
         return cell
@@ -104,5 +107,17 @@ extension FeedController {
 extension FeedController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width, height: 120)
+    }
+}
+
+
+
+// MARK: - TweetCellDelegate
+
+extension FeedController: TweetCellDelegate {
+    func handleProfileImageTapped(_ cell: TweetCell) {
+        print("DEBUG : Handle profile image tapped in controller / 컨트롤러에서 탭된 프로필 이미지")
+        let controller = ProfileController(collectionViewLayout: UICollectionViewLayout())
+        navigationController?.pushViewController(controller, animated: true)
     }
 }

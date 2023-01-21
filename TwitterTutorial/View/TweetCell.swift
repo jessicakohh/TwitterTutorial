@@ -7,6 +7,12 @@
 
 import UIKit
 
+// ⭐️ 이해해야 할 중요한 개념 :
+// 이 함수를 구현하는 위치와 코드를 작성하는 위치
+protocol TweetCellDelegate: class {
+    func handleProfileImageTapped(_ cell: TweetCell)
+}
+
 class TweetCell: UICollectionViewCell {
     
     // MARK: - Properties
@@ -16,13 +22,20 @@ class TweetCell: UICollectionViewCell {
         didSet { configure() }
     }
     
-    private let profileImageView: UIImageView = {
+    weak var delegate: TweetCellDelegate?
+    
+    private lazy var profileImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFit
         iv.clipsToBounds = true
         iv.setDimensions(width: 48, height: 48)
         iv.layer.cornerRadius = 48 / 2
         iv.backgroundColor = .twitterBlue
+        
+        // 탭 제스처 (UIImageView 버튼처럼 addTarget이 불가)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleProfileImageTapped))
+        iv.addGestureRecognizer(tap)
+        iv.isUserInteractionEnabled = true
         return iv
     }()
     
@@ -119,6 +132,14 @@ class TweetCell: UICollectionViewCell {
     }
     
     // MARK: - Selectors
+    
+    @objc func handleProfileImageTapped() {
+        print("DEBUG : Profile image tapped in cell")
+       // 컬렉션뷰는 탐색에 엑세스할 수 없기 때문에 navigationController 사용 못함
+        // 컬렉션은 해당 프로필 이미지 또는 해당 프로필 컨트롤러로 이동하기 위해 컨트롤러 자체를 본다
+        delegate?.handleProfileImageTapped(self)
+    }
+    
     @objc func handleCommentTapped() {
         
     }
