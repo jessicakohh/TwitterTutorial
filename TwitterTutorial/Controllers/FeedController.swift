@@ -87,6 +87,13 @@ extension FeedController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TweetCell
+        
+        // 셀에서 생성한 트윗 속성에 액세스하고 있으며 이를 다음의 요소로 설정하고 있다.
+        // 트윗 데이터소스 : 0 인덱스에 하나, 인덱스에 하나, ~ ~ 이렇게 요소가 들어감
+        // indexPath.row 경로를 사용하여 트윗 데이터 소스 배열에서 원하는 요소에 엑세스
+        print("DEBUG: Index path is \(indexPath.row) / 인덱스 경로")
+        cell.tweet = tweets[indexPath.row]
+        
         return cell
     }
 }

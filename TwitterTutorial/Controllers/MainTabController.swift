@@ -53,7 +53,8 @@ class MainTabController: UITabBarController {
     // 이 기능을 호출 할 때 실제로 가지고 있는 사용자에 엑세스할 수 있어야 함
     // 가져온 다음 계속해서 해당 사용자를 FeedController로 전달해야 함
     func fetchUser() {
-        UserService.shared.fetchUser { user in
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        UserService.shared.fetchUser(uid: uid) { user in
             print("DEBUG : Main tab user is \(user.username)")
             self.user = user
         }

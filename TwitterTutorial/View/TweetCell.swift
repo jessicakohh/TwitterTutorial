@@ -10,6 +10,12 @@ import UIKit
 class TweetCell: UICollectionViewCell {
     
     // MARK: - Properties
+    
+    // 트윗이 아직 없는 경우 트윗으로 셀을 채우려고 시도하지 않도록 하기 위해 옵셔널로 처리한다
+    var tweet: Tweet? {
+        didSet { configure() }
+    }
+    
     private let profileImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFit
@@ -131,4 +137,12 @@ class TweetCell: UICollectionViewCell {
     
     // MARK: - Helpers
     
+    func configure() {
+        guard let tweet = tweet else { return }
+        captionLabel.text = tweet.caption
+        
+        profileImageView.sd_setImage(with: tweet.user.profileImageUrl)
+        infoLabel.text = tweet.user.username
+        print("DEBUG : Tweet user is \(tweet.user.username)")
+    }
 }
