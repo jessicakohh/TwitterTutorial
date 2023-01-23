@@ -30,11 +30,11 @@ struct ProfileHeaderViewModel {
     let usernameText: String
     
     var followersString: NSAttributedString? {
-        return attributedText(withValue: 0, text: " 팔로워")
+        return attributedText(withValue: user.stats?.followers ?? 0, text: " 팔로워")
     }
     
     var followingString: NSAttributedString? {
-        return attributedText(withValue: 2, text: " 팔로잉")
+        return attributedText(withValue: user.stats?.following ?? 0, text: " 팔로잉")
         
     }
     

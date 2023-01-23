@@ -65,4 +65,28 @@ struct UserService {
             completion(snapshot.exists())
         }
     }
+    
+//    func fetchUserStats() {
+//        UserService.shared.fetchUserStates(uid: user.uid) { stats in
+//            print("DEBUG : 유저는 \(stats.followers)의 팔로워이다")
+//            print("DEBUG : 유저는 \(stats.following)를 팔로우한")
+//        }
+//    }
+    
+    
+    // 사용자 팔로워/팔로잉 통계 업데이트
+    func fetchUserStates(uid: String, completion: @escaping(UserRelationStats) -> Void) {
+        REF_USER_FOLLOWERS.child(uid).observeSingleEvent(of: .value) { snapshot in
+            let followers = snapshot.children.allObjects.count
+            
+            REF_USER_FOLLOWING.child(uid).observeSingleEvent(of: .value) { snapshot in
+                let following = snapshot.children.allObjects.count
+                
+                let stats = UserRelationStats(followers: followers, following: following)
+                completion(stats)
+            }
+            
+            print("DEBUG : 팔로워 수 : \(followers)")
+        }
+    }
 }

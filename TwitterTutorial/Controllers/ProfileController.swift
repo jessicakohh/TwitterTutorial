@@ -36,6 +36,7 @@ class ProfileController: UICollectionViewController {
         configureCollectionView()
         fetchTweets()
         checkIfUserIsFollowed()
+        fetchUserStats()
         
         print("DEBUG : User is \(user.username)")
     }
@@ -65,11 +66,21 @@ class ProfileController: UICollectionViewController {
             self.collectionView.reloadData()
         }
     }
+    
+    func fetchUserStats() {
+        UserService.shared.fetchUserStates(uid: user.uid) { stats in
+            self.user.stats = stats
+            self.collectionView.reloadData()
+            print("DEBUG : 유저는 \(stats.followers)의 팔로워이다")
+            print("DEBUG : 유저는 \(stats.following)를 팔로우한")
+        }
+    }
 
     
     // MARK: - Helpers
     
     func configureCollectionView() {
+        
         collectionView.backgroundColor = .white
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.register(TweetCell.self, forCellWithReuseIdentifier: reuseIdentifier)
