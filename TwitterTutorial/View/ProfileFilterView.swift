@@ -33,6 +33,11 @@ class ProfileFilterView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         collectionView.register(ProfileFilterCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        
+        // 애니메이션
+        let selectedIndexPath = IndexPath(row: 0, section: 0)
+        collectionView.selectItem(at: selectedIndexPath, animated: true, scrollPosition: .left)
+        
         addSubview(collectionView)
         collectionView.addConstraintsToFillView(self)
     }
@@ -46,12 +51,19 @@ class ProfileFilterView: UIView {
 
 extension ProfileFilterView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        // 데이터모델을 확장할 수 있고, 컬렉션으로 다시 돌아올 필요가 없다 
+        return ProfileFilterOptions.allCases.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
-                                                      for: indexPath) as! ProfileFilterCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ProfileFilterCell
+        
+        // 각 사례를 셀 모음으로 래핑, 인덱스 경로를 사용하여 이를 수행
+        // 각 셀이 렌더링 될 때 인덱스 경로를 보면 0 1 2
+        // 함수의 항목에 대한 셀에서 이 인덱스 경로에 엑세스 할 수 있음
+        let option = ProfileFilterOptions(rawValue: indexPath.row)
+        cell.option = option
+        
         return cell
     }
 }
@@ -69,11 +81,13 @@ extension ProfileFilterView: UICollectionViewDelegate {
 
 extension ProfileFilterView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: frame.width / 3, height: frame.height)
+        
+        let count = CGFloat(ProfileFilterOptions.allCases.count)
+        return CGSize(width: frame.width / count, height: frame.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 2
+        return 0
     }
 }
 

@@ -18,8 +18,7 @@ class ProfileHeader: UICollectionReusableView {
         view.backgroundColor = .twitterBlue
         
         view.addSubview(backButton)
-        backButton.anchor(top: view.topAnchor, left: view.leftAnchor,
-                                 paddingTop: 42, paddingLeft: 16)
+        backButton.anchor(top: view.topAnchor, left: view.leftAnchor, paddingTop: 42, paddingLeft: 16)
         backButton.setDimensions(width: 30, height: 30)
         
         return view
