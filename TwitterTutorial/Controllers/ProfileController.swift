@@ -81,6 +81,7 @@ extension ProfileController {
                                                                      withReuseIdentifier: headerIdentifier,
                                                                      for: indexPath) as! ProfileHeader
         header.user = user
+        header.delegate = self
         return header
     }
 }
@@ -96,5 +97,14 @@ extension ProfileController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width, height: 120)
+    }
+}
+
+// MARK: - ProfileHeaderDelegate
+
+extension ProfileController: ProfileHeaderDelegate {
+    func handleDismissal() {
+        print("DEBUG : 프로파일 컨트롤러에서 프로파일 해제 처리")
+        navigationController?.popViewController(animated: true)
     }
 }

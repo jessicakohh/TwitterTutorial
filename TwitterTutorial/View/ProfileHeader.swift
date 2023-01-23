@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol ProfileHeaderDelegate: class {
+    func handleDismissal()
+}
+
 class ProfileHeader: UICollectionReusableView {
     
     // MARK: - Properties
@@ -14,6 +18,9 @@ class ProfileHeader: UICollectionReusableView {
     var user: User? {
         didSet { configure() }
     }
+    
+    // handleDismissal()에 엑세스 가능
+    weak var delegate: ProfileHeaderDelegate?
     
     private let filterBar = ProfileFilterView()
     
@@ -167,7 +174,8 @@ class ProfileHeader: UICollectionReusableView {
     // MARK: - Selectors
 
     @objc func handleDismissal() {
-        
+        // 뷰 클래스에서 dismiss 기능이 없기 때문에 프로토콜을 사용해야한다.
+        delegate?.handleDismissal()
     }
     
     @objc func handleEditProfileFollow() {
