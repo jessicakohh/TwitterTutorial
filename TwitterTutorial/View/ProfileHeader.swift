@@ -53,7 +53,7 @@ class ProfileHeader: UICollectionReusableView {
         return iv
     }()
     
-    private lazy var editProfileFollowButton: UIButton = {
+    lazy var editProfileFollowButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Loading", for: .normal)
         button.layer.borderColor = UIColor.twitterBlue.cgColor
@@ -193,6 +193,8 @@ class ProfileHeader: UICollectionReusableView {
     func configure() {
         guard let user = user else { return }
         let viewModel = ProfileHeaderViewModel(user: user)
+        
+        print("DEBUG : Didset이 유저의 프로필 헤더를 호출")
         
         profileImageView.sd_setImage(with: user.profileImageUrl)
         editProfileFollowButton.setTitle(viewModel.actionButtonTitle, for: .normal)

@@ -43,9 +43,16 @@ struct ProfileHeaderViewModel {
         // 아니라면 팔로우 여부 파악
         if user.isCurrentUser {
             return "프로필 수정"
-        } else {
+        }
+        
+        if !user.isFollowed && !user.isCurrentUser {
             return "팔로우"
         }
+        
+        if user.isFollowed {
+            return "팔로잉"
+        }
+        return "로딩"
     }
     
     init(user: User) {
