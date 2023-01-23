@@ -20,8 +20,14 @@ struct TweetService {
                       "retweets": 0,
                       "caption": caption] as [String: AnyObject]
         
+        let ref = REF_TWEETS.childByAutoId()
+        
         // 고유 식별자를 자동으로 생성, 사용자를 생성하고 고유 식별자를 추가한다음 모든 항목을 업로드
-        REF_TWEETS.childByAutoId().updateChildValues(values, withCompletionBlock: completion)
+        ref.updateChildValues(values) { (err, ref) in
+            // 트윗 업로드 트윗 완료 후 사용자 지정 구조 업데이트
+            guard let tweetID = ref.key else { return }
+            REF_USER_TWEETS.child(uid).updateChildValues([tweetID: 1], withCompletionBlock: completion)
+        }
     }
     
     // 데이터베이스에서 트윗을 가져오기 위한 함수

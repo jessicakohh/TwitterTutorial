@@ -42,6 +42,7 @@ class FeedController: UICollectionViewController {
     // 뒤로가기 버튼 왔다갔다 할때 네비게이션 바 항상 나타나도록
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.navigationBar.barStyle = .default
         navigationController?.navigationBar.isHidden = false
     }
     
