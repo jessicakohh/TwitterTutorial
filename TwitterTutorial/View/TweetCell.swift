@@ -168,6 +168,4 @@ class TweetCell: UICollectionViewCell {
         infoLabel.text = tweet.user.username
         infoLabel.attributedText = viewModel.userInfoText
     }
-    
-    
 }
