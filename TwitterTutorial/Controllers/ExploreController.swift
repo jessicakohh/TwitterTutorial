@@ -114,9 +114,10 @@ extension ExploreController: UISearchResultsUpdating {
     
     // 무엇인가 입력 혹은 삭제할때마다 호출
     func updateSearchResults(for searchController: UISearchController) {
-        guard let searchText = searchController.searchBar.text?.lowercased() else { return }
+        guard let searchText = searchController.searchBar.text else { return }
         
-        filteredUsers = users.filter({ $0.username.contains(searchText) })
-
+        filteredUsers = users.filter({
+        $0.username.lowercased().hasPrefix(searchText.lowercased()) ||
+        $0.fullname.lowercased().hasPrefix(searchText.lowercased()) })
     }
 }

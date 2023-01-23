@@ -8,6 +8,8 @@
 import Foundation
 import Firebase
 
+typealias DatabaseCompletion = ((Error?, DatabaseReference) -> Void)
+
 struct UserService {
     static let shared = UserService()
     
@@ -45,5 +47,13 @@ struct UserService {
         
         print("DEBUG : 현재 uid \(currentUid)가 \(uid)를 팔로잉하기 시작")
         print("DEBUG : \(currentUid)가 팔로워로써 \(uid)를 얻다")
+    }
+    
+    func unfollowUser(uid: String, completion: @escaping(DatabaseCompletion)) {
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        
+        REF_USER_FOLLOWING.child(currentUid).child(uid).removeValue() { (err, ref) in
+            REF_USER_FOLLOWERS.child(uid).child(currentUid).removeValue(completionBlock: completion)
+        }
     }
 }
