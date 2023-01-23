@@ -16,7 +16,9 @@ struct User {
     var profileImageUrl: URL?
     let uid: String
     
-    // 자신의 초기화를 작성하교 유형이 될 이 딕셔너리를 전달
+    var isCurrentUser: Bool { return Auth.auth().currentUser?.uid == uid }
+    
+    // 자신의 초기화를 작성하고 유형이 될 이 딕셔너리를 전달
     init(uid: String, dictionary: [String: AnyObject]) {
         self.uid = uid
         

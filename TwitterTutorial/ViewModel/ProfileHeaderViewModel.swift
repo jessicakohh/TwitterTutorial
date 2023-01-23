@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 // 이 열거형을 사용하여 컬렉션 뷰 셀을 채울 것
 enum ProfileFilterOptions: Int, CaseIterable {
     case tweets
@@ -20,5 +19,43 @@ enum ProfileFilterOptions: Int, CaseIterable {
         case .replies: return "Tweets & Replies"
         case .likes: return "Likes"
         }
+    }
+}
+
+
+struct ProfileHeaderViewModel {
+    
+    private let user: User
+    
+    var followersString: NSAttributedString? {
+        return attributedText(withValue: 0, text: " 팔로워")
+    }
+    
+    var followingString: NSAttributedString? {
+        return attributedText(withValue: 2, text: " 팔로잉")
+        
+    }
+    
+    var actionButtonTitle: String {
+        // 사용자가 현재 사용자인 경우 프로필을 편집하도록 설정
+        // 아니라면 팔로우 여부 파악
+        if user.isCurrentUser {
+            return "프로필 수정"
+        } else {
+            return "팔로우"
+        }
+    }
+    
+    init(user: User) {
+        self.user = user
+    }
+    
+    fileprivate func attributedText(withValue value: Int, text: String) -> NSAttributedString {
+        let attributedTitle = NSMutableAttributedString(string: "\(value)",
+                                                        attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14)])
+        attributedTitle.append(NSAttributedString(string: "\(text)",
+                                                  attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14),
+                                                               NSAttributedString.Key.foregroundColor: UIColor.lightGray]))
+        return attributedTitle
     }
 }

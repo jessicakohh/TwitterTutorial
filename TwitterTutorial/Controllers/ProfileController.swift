@@ -13,12 +13,24 @@ private let headerIdentifier = "ProfileHeader"
 class ProfileController: UICollectionViewController {
     
     // MARK: - Properties
+    private let user: User
     
     // MARK: - LifeCycle
+    
+    init(user: User) {
+        self.user = user
+        super.init(collectionViewLayout: UICollectionViewFlowLayout())
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionView()
+        
+        print("DEBUG : User is \(user.username)")
     }
     
     // 이 뷰가 나타나려고 할 때마다 네비게이션 바의 hidden 속성을 true로 설정
@@ -68,6 +80,7 @@ extension ProfileController {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
                                                                      withReuseIdentifier: headerIdentifier,
                                                                      for: indexPath) as! ProfileHeader
+        header.user = user
         return header
     }
 }
