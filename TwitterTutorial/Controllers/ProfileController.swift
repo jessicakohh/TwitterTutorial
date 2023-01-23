@@ -127,27 +127,35 @@ extension ProfileController: UICollectionViewDelegateFlowLayout {
 // MARK: - ProfileHeaderDelegate
 
 extension ProfileController: ProfileHeaderDelegate {
-    func handleEditProfileFollow(_ header: ProfileHeader) {
-        print("DEBUG : 유저가 버튼을 누르기 전까지 \(user.isFollowed)를 팔로우 ")
-                
-        // 사용자를 언제 팔로우하고 언팔할지 알아야 함
-        if user.isFollowed {
-            UserService.shared.unfollowUser(uid: user.uid) { (err, ref) in
-                self.user.isFollowed = false
-                self.collectionView.reloadData()
-                print("DEBUG : 백엔드에서 언팔로우 완료")
-            }
-        } else {
-            UserService.shared.followUser(uid: user.uid) { (ref, err) in
-                self.user.isFollowed = true
-                self.collectionView.reloadData()
-                print("DEBUG : 백엔드에서 팔로우 완료")
-            }
-        }
-    }
     
     func handleDismissal() {
         print("DEBUG : 프로파일 컨트롤러에서 프로파일 해제 처리")
         navigationController?.popViewController(animated: true)
+    }
+    
+    
+    func handleEditProfileFollow(_ header: ProfileHeader) {
+        print("DEBUG : 유저가 버튼을 누르기 전까지 \(user.isFollowed)를 팔로우 ")
+        
+        if user.isCurrentUser {
+            print("DEBUG : Show edit profile controller")
+            return
+            
+            // 사용자를 언제 팔로우하고 언팔할지 알아야 함
+            if user.isFollowed {
+                UserService.shared.unfollowUser(uid: user.uid) { (err, ref) in
+                    self.user.isFollowed = false
+                    self.collectionView.reloadData()
+                    print("DEBUG : 백엔드에서 언팔로우 완료")
+                }
+            } else {
+                UserService.shared.followUser(uid: user.uid) { (ref, err) in
+                    self.user.isFollowed = true
+                    self.collectionView.reloadData()
+                    print("DEBUG : 백엔드에서 팔로우 완료")
+                }
+            }
+        }
+        
     }
 }
