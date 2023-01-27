@@ -13,6 +13,7 @@ private let headerIdentifier = "TweetHeader"
 class TweetController: UICollectionViewController {
     
     // MARK: - Properties
+    
     private let tweet: Tweet
     
     // MARK: - LifeCycle
@@ -63,6 +64,7 @@ extension TweetController {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
                                                                      withReuseIdentifier: headerIdentifier,
                                                                      for: indexPath) as! TweetHeader
+        header.tweet = tweet
         return header
     }
 }

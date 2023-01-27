@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>DATABASE_URL</key>
+	<string>https://twittertutorial-459ba-default-rtdb.firebaseio.com/</string>
+	<key>CLIENT_ID</key>
+	<string>220762290365-h4pgfq1b0odik53ls55h6gn6u3ogstvn.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.220762290365-h4pgfq1b0odik53ls55h6gn6u3ogstvn</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAatJDptN0ginj9P6vqdQwOX-u1oqFEeC8</string>
+	<key>GCM_SENDER_ID</key>
+	<string>220762290365</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.jessicaKoh.TwitterTutorial</string>
+	<key>PROJECT_ID</key>
+	<string>twittertutorial-459ba</string>
+	<key>STORAGE_BUCKET</key>
+	<string>twittertutorial-459ba.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:220762290365:ios:76302c74580dba99ef9fd4</string>
+</dict>
+</plist>
