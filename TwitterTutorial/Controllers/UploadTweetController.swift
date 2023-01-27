@@ -11,6 +11,9 @@ class UploadTweetController: UIViewController {
     // MARK: -  Properties
     
     private let user: User
+    private let config: UploadTweetConfiguration
+    private lazy var viewModel = UploadTweetViewModel(config: config)
+    
     
     // let으로 하면 실행이 안됨. 실제 버튼 앞의 정의에 대상을 추가하려고 하기 때문에
     // 네비게이션 항목에 추가하면 인스턴스화 되는 것처럼 작동하지 않는다.
@@ -43,8 +46,9 @@ class UploadTweetController: UIViewController {
     // MARK: - Lifecycle
     
     // 초기화 외부에서 액세스 해야 하므로 클래스 수준 변수로 만들어야 했다
-    init(user: User) {
+    init(user: User, config: UploadTweetConfiguration) {
         self.user = user
+        self.config = config
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -54,9 +58,14 @@ class UploadTweetController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         configureUI()
-        print("DEBUG : User is \(user.username)")
+        
+        switch config {
+        case .tweet:
+            print("DEBUG : config is tweet")
+        case .reply(let tweet):
+            print("DEBUG : Replying to \(tweet.caption)")
+        }
     }
     // MARK: - Selectors
     @objc func handleCancel() {

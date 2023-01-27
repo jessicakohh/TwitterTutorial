@@ -69,7 +69,7 @@ struct UserService {
 //    func fetchUserStats() {
 //        UserService.shared.fetchUserStates(uid: user.uid) { stats in
 //            print("DEBUG : 유저는 \(stats.followers)의 팔로워이다")
-//            print("DEBUG : 유저는 \(stats.following)를 팔로우한")
+//            print("DEBUG : 유저는 \(stats.following)를 팔로우한다")
 //        }
 //    }
     

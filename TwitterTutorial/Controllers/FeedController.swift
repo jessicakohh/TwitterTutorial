@@ -128,6 +128,16 @@ extension FeedController: UICollectionViewDelegateFlowLayout {
 // MARK: - TweetCellDelegate
 
 extension FeedController: TweetCellDelegate {
+    
+    func handleReplyTapped(_ cell: TweetCell) {
+        // 셀에 있는 트윗에 엑세스할 사용자를 어떻게 알 수 있는가 ?
+        guard let tweet = cell.tweet else { return }
+        let controller = UploadTweetController(user: tweet.user, config: .reply(tweet))
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true, completion: nil)
+    }
+    
     func handleProfileImageTapped(_ cell: TweetCell) {
         print("DEBUG : Handle profile image tapped in controller / 컨트롤러에서 탭된 프로필 이미지")
         guard let user = cell.tweet?.user else { return }

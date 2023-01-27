@@ -137,13 +137,13 @@ class TweetHeader: UICollectionReusableView {
         
         let stack = UIStackView(arrangedSubviews: [profileImageView, labelStack])
         stack.spacing = 12
-         
+        
         addSubview(stack)
         stack.anchor(top: topAnchor, left: leftAnchor, paddingTop: 16, paddingLeft: 16)
         
         addSubview(captionLabel)
         captionLabel.anchor(top: stack.bottomAnchor, left: leftAnchor, right: rightAnchor,
-                            paddingTop: 20, paddingLeft: 16, paddingRight: 16)
+                            paddingTop: 12, paddingLeft: 16, paddingRight: 16)
         
         addSubview(dateLabel)
         dateLabel.anchor(top: captionLabel.bottomAnchor, left: leftAnchor,
