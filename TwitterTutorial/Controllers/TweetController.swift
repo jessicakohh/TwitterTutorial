@@ -14,6 +14,7 @@ class TweetController: UICollectionViewController {
     
     // MARK: - Properties
     private let tweet: Tweet
+    private let actionSheetLauncher: ActionSheetLauncher
     private var replies = [Tweet]() {
         didSet { collectionView.reloadData() }
     }
@@ -22,6 +23,7 @@ class TweetController: UICollectionViewController {
     
     init(tweet: Tweet) {
         self.tweet = tweet
+        self.actionSheetLauncher = ActionSheetLauncher(user: tweet.user)
         super.init(collectionViewLayout: UICollectionViewFlowLayout())
     }
     
@@ -82,6 +84,7 @@ extension TweetController {
                                                                      withReuseIdentifier: headerIdentifier,
                                                                      for: indexPath) as! TweetHeader
         header.tweet = tweet
+        header.delegate = self
         return header
     }
 }
@@ -103,3 +106,9 @@ extension TweetController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+
+extension TweetController: TweetHeaderDelegate {
+    func showActionSheet() {
+        actionSheetLauncher.show()
+    }
+}
