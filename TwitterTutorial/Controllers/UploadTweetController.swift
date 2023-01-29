@@ -68,14 +68,8 @@ class UploadTweetController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        
-        switch config {
-        case .tweet:
-            print("DEBUG : config is tweet")
-        case .reply(let tweet):
-            print("DEBUG : Replying to \(tweet.caption)")
-        }
     }
+    
     // MARK: - Selectors
     @objc func handleCancel() {
         dismiss(animated: true, completion: nil)
@@ -83,7 +77,7 @@ class UploadTweetController: UIViewController {
     
     @objc func handelUploadTweet() {
         guard let caption = captionTextView.text else { return }
-        TweetService.shared.uploadTweet(caption: caption) { (error, ref) in
+        TweetService.shared.uploadTweet(caption: caption, type: config) { (error, ref) in
             print("DEBUG : Tweet did upload to Database / 트윗이 데이터베이스에 업로드되었습니다")
             if let error = error {
                 print("DEBUG : Failed to upload with error / 업로드 실패 / \(error.localizedDescription)")
