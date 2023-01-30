@@ -14,7 +14,7 @@ class TweetController: UICollectionViewController {
     
     // MARK: - Properties
     private let tweet: Tweet
-    private let actionSheetLauncher: ActionSheetLauncher
+    private var actionSheetLauncher: ActionSheetLauncher!
     private var replies = [Tweet]() {
         didSet { collectionView.reloadData() }
     }
@@ -23,7 +23,6 @@ class TweetController: UICollectionViewController {
     
     init(tweet: Tweet) {
         self.tweet = tweet
-        self.actionSheetLauncher = ActionSheetLauncher(user: tweet.user)
         super.init(collectionViewLayout: UICollectionViewFlowLayout())
     }
     
@@ -59,6 +58,13 @@ class TweetController: UICollectionViewController {
         collectionView.register(TweetHeader.self,
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                                 withReuseIdentifier: headerIdentifier)
+    }
+    
+    // 유저를 전달
+    fileprivate func showActionSheet(forUser user: User) {
+        actionSheetLauncher = ActionSheetLauncher(user: user)
+        actionSheetLauncher.delegate = self
+        actionSheetLauncher.show()
     }
 }
 
@@ -106,9 +112,32 @@ extension TweetController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: - TweetHeaderDelegate
 
 extension TweetController: TweetHeaderDelegate {
+    
+    // 사용자가 팔로우하고 있는지 여부를 확인하고 그에 따라 옵션을 업데이트 해야한다.
+    // 보여달라고 요청할 때에만 ActionSheet 활성화
+    // 기본적으로 사용자가 현재 사용자일때 특정 조건으로 표시
+    
     func showActionSheet() {
-        actionSheetLauncher.show()
+        if tweet.user.isCurrentUser {
+            showActionSheet(forUser: tweet.user)
+        } else {
+            UserService.shared.checkIfUsersFollowed(uid: tweet.user.uid) { isFollowed in
+                var user = self.tweet.user
+                user.isFollowed = isFollowed
+                self.showActionSheet(forUser: user)
+            }
+        }
+    }
+}
+
+
+// MARK: - ActionSheetLauncherDelegate
+
+extension TweetController: ActionSheetLauncherDelegate {
+    func didSelect(option: ActionSheetOptions) {
+        print("DEBUG : Option in controller is \(option.description)")
     }
 }

@@ -44,7 +44,6 @@
 		C8DE270E29780DF40067A040 /* TweetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DE270D29780DF40067A040 /* TweetService.swift */; };
 		C8DE27102978FFFB0067A040 /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DE270F2978FFFB0067A040 /* Tweet.swift */; };
 		C8DE2712297914BE0067A040 /* TweetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DE2711297914BD0067A040 /* TweetCell.swift */; };
-		FEE8435364F9CACBF364B9DD /* Pods_TwitterTutorial.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFBDE1347421EBF9B4923F1F /* Pods_TwitterTutorial.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -89,7 +88,6 @@
 		C8DE270D29780DF40067A040 /* TweetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetService.swift; sourceTree = "<group>"; };
 		C8DE270F2978FFFB0067A040 /* Tweet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tweet.swift; sourceTree = "<group>"; };
 		C8DE2711297914BD0067A040 /* TweetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetCell.swift; sourceTree = "<group>"; };
-		EFBDE1347421EBF9B4923F1F /* Pods_TwitterTutorial.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TwitterTutorial.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,7 +95,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FEE8435364F9CACBF364B9DD /* Pods_TwitterTutorial.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,14 +108,6 @@
 				3DE69346E0636186D7393FBE /* Pods-TwitterTutorial.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		10770BD95D5F918F03058A77 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				EFBDE1347421EBF9B4923F1F /* Pods_TwitterTutorial.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		C86017AC29710D8C00E9FBA1 /* Utilities */ = {
@@ -138,7 +127,6 @@
 				C87D214B2970C62F006A4531 /* TwitterTutorial */,
 				C87D214A2970C62F006A4531 /* Products */,
 				0C3F94DF2C22AD703FC697E1 /* Pods */,
-				10770BD95D5F918F03058A77 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};

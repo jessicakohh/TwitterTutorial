@@ -15,7 +15,7 @@ struct Tweet {
     let likes: Int
     var timestamp: Date!
     let retweetCount: Int
-    let user: User
+    var user: User
     
     // 사용자와 함께 트윗을 초기화, 트윗은 사용자에게 속해야한다
     init(user: User, tweetID: String, dictionary: [String: Any]) {
