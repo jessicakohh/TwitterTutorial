@@ -87,4 +87,21 @@ struct TweetService {
             }
         }
     }
+    
+    func likeTweet(tweet: Tweet, completion: @escaping(DatabaseCompletion)) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        // 데이터베이스를 업데이트 할 항목의 정수값
+        let likes = tweet.didLike ? tweet.likes - 1 :tweet.likes + 1
+        REF_TWEETS.child(tweet.tweetID).child("likes").setValue(likes)
+        
+        if tweet.didLike {
+            // 파이어베이스에서 좋아요 삭제 (unlike)
+        } else {
+            // 파이어베이스에 좋아요 추가 (like)
+            REF_USER_LIKES.child(uid).updateChildValues([tweet.tweetID: 1]) { (err, ref) in
+                REF_TWEET_LIKES.child(tweet.tweetID).updateChildValues([uid: 1], withCompletionBlock: completion)
+            }
+        }
+    }
 }
