@@ -23,4 +23,4 @@
 - [66강) ActionSheet (1)](https://jesskoh.notion.site/66-ActionSheet-1-d472894d2cbe4005b47473f8d36594a6)
 - [67강) ActionSheet (2)_UI Test](https://jesskoh.notion.site/66-ActionSheet-1-d472894d2cbe4005b47473f8d36594a6)
 - [68강) ActionSheet (3)_TableView animation & FadeView](https://jesskoh.notion.site/68-ActionSheet-3-_TableView-animation-FadeView-6c2c9fb7e1014767954c7ab5bc34eb7b)
-- [69강) 69강) ActionSheet (4)_TableView Footer](https://jesskoh.notion.site/69-ActionSheet-4-_TableView-Footer-b95b45f3b8b9484f996261f53da86650)
+- [69강) ActionSheet (4)_TableView Footer](https://jesskoh.notion.site/69-ActionSheet-4-_TableView-Footer-b95b45f3b8b9484f996261f53da86650)
