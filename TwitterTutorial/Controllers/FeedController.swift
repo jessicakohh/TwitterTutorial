@@ -130,6 +130,11 @@ extension FeedController: UICollectionViewDelegateFlowLayout {
 // MARK: - TweetCellDelegate
 
 extension FeedController: TweetCellDelegate {
+    func handleLikeTapped(_ cell: TweetCell) {
+//        guard var tweet = cell.tweet else { return }
+        cell.tweet?.didLike.toggle()
+        print("DEBUG : Tweet is liked is \(cell.tweet?.didLike)")
+    }
     
     func handleReplyTapped(_ cell: TweetCell) {
         // 셀에 있는 트윗에 엑세스할 사용자를 어떻게 알 수 있는가 ?
