@@ -108,4 +108,19 @@ struct TweetService {
             }
         }
     }
+    
+    // 사용자로 들어가서 찾아봄, 트윗ID를 찾으면 true로 완료, 그렇지 않으면 false
+    func checkIfUserLikedTweet(_ tweet: Tweet, completion: @escaping(Bool) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        REF_USER_LIKES.child(uid).child(tweet.tweetID).observeSingleEvent(of: .value) { snapshot in
+            completion(snapshot.exists())
+        }
+    }
 }
+
+    // 우리는 모든 것을 업데이트 하기 전에 사용자가 트윗을 좋아하는지 확인하고 싶지 않다.
+// 기본적으로 우리는 사용자가 전 트윗을 좋아하는지 확인하고, 확인해야 하도록 만드는 것을 피하고 싶다.
+// 그런 다음 사용자가 트윗을 좋아하는지 확인한다. 그렇게 하면 우리가 확인할 필요가 없기 때문 (뭔말이야)
+// 따라서 기본적으로 먼저 트윗을 가져온 다음, 모든 트윗을 가져온 후에 가져온 트윗을 확인하고 볼 것이다.
+// 사용자가 이러한 트윗 중 하나라도 좋아요를 누른다면, 사용자 인터페이스도 업데이트 할 것이다. 
