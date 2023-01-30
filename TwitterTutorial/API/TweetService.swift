@@ -97,6 +97,10 @@ struct TweetService {
         
         if tweet.didLike {
             // 파이어베이스에서 좋아요 삭제 (unlike)
+            REF_USER_LIKES.child(uid).child(tweet.tweetID).removeValue { (err, ref) in
+                REF_USER_LIKES.child(tweet.tweetID).updateChildValues([uid: 1], withCompletionBlock: completion)
+                REF_TWEET_LIKES.child(tweet.tweetID).removeValue(completionBlock: completion)
+            }
         } else {
             // 파이어베이스에 좋아요 추가 (like)
             REF_USER_LIKES.child(uid).updateChildValues([tweet.tweetID: 1]) { (err, ref) in

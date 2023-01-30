@@ -61,8 +61,16 @@ struct TweetViewModel {
                                         attributes: [.font: UIFont.systemFont(ofSize: 14),
                                                      .foregroundColor: UIColor.lightGray]))
         
-        print("DEBUG : Date of tweet is \(timestamp)")
         return title
+    }
+    
+    var likeButtonTintColor: UIColor {
+        return tweet.didLike ? .systemPink : .lightGray
+    }
+    
+    var likeButtonImage: UIImage {
+        let imageName = tweet.didLike ? "like_filled" : "like"
+        return UIImage(named: imageName)!
     }
     
     init(tweet: Tweet) {
