@@ -177,6 +177,7 @@ class ProfileHeader: UICollectionReusableView {
     }
     
     @objc func handleEditProfileFollow() {
+        editProfileFollowButton.isUserInteractionEnabled = false
         delegate?.handleEditProfileFollow(self)
     }
     
@@ -198,7 +199,6 @@ class ProfileHeader: UICollectionReusableView {
         
         profileImageView.sd_setImage(with: user.profileImageUrl)
         editProfileFollowButton.setTitle(viewModel.actionButtonTitle, for: .normal)
-        
         followingLabel.attributedText = viewModel.followingString
         followersLabel.attributedText = viewModel.followersString
         

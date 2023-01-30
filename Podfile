@@ -7,10 +7,10 @@ target 'TwitterTutorial' do
 
   # Pods for TwitterTutorial
 
-	pod 'Firebase'
-	pod 'FirebaseCore'
-	pod 'FirebaseDatabase'
-	pod 'FirebaseStorage'
-	pod 'FirebaseAuth'
+      pod 'Firebase'
+      pod 'Firebase/Storage'
+      pod 'Firebase/Auth'
+      pod 'Firebase/Database'
+
 	pod 'SDWebImage', '~> 5.0'
 end

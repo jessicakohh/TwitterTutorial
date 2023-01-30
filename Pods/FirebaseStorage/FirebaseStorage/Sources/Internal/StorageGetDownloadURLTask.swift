@@ -44,25 +44,21 @@ internal class StorageGetDownloadURLTask: StorageTask, StorageTaskManagement {
    * Prepares a task and begins execution.
    */
   internal func enqueue() {
-    if let completion = taskCompletion {
-      taskCompletion = { (url: URL?, error: Error?) in
-        completion(url, error)
-        // Reference self in completion handler in order to retain self until completion is called.
-        self.taskCompletion = nil
-      }
-    }
-    dispatchQueue.async { [weak self] in
-      guard let self = self else { return }
-      var request = self.baseRequest
+    weak var weakSelf = self
+    DispatchQueue.global(qos: .background).async {
+      guard let strongSelf = weakSelf else { return }
+      var request = strongSelf.baseRequest
       request.httpMethod = "GET"
-      request.timeoutInterval = self.reference.storage.maxOperationRetryTime
+      request.timeoutInterval = strongSelf.reference.storage.maxOperationRetryTime
 
-      let fetcher = self.fetcherService.fetcher(with: request)
+      let callback = strongSelf.taskCompletion
+      strongSelf.taskCompletion = nil
+
+      let fetcher = strongSelf.fetcherService.fetcher(with: request)
       fetcher.comment = "GetDownloadURLTask"
-      self.fetcher = fetcher
+      strongSelf.fetcher = fetcher
 
-      self.fetcherCompletion = { [weak self] (data: Data?, error: NSError?) in
-        guard let self = self else { return }
+      strongSelf.fetcherCompletion = { (data: Data?, error: NSError?) in
         var downloadURL: URL?
         if let error = error {
           if self.error == nil {
@@ -71,8 +67,8 @@ internal class StorageGetDownloadURLTask: StorageTask, StorageTaskManagement {
         } else {
           if let data = data,
              let responseDictionary = try? JSONSerialization
-             .jsonObject(with: data) as? [String: Any] {
-            downloadURL = self.downloadURLFromMetadataDictionary(responseDictionary)
+             .jsonObject(with: data) as? [String: String] {
+            downloadURL = strongSelf.downloadURLFromMetadataDictionary(responseDictionary)
             if downloadURL == nil {
               self.error = NSError(domain: StorageErrorDomain,
                                    code: StorageErrorCode.unknown.rawValue,
@@ -83,25 +79,28 @@ internal class StorageGetDownloadURLTask: StorageTask, StorageTaskManagement {
             self.error = StorageErrorCode.error(withInvalidRequest: data)
           }
         }
-        self.taskCompletion?(downloadURL, self.error)
+        callback?(downloadURL, self.error)
         self.fetcherCompletion = nil
       }
 
-      self.fetcher?.beginFetch { [weak self] data, error in
-        self?.fetcherCompletion?(data, error as? NSError)
+      strongSelf.fetcher?.beginFetch { data, error in
+        let strongSelf = weakSelf
+        if let fetcherCompletion = strongSelf?.fetcherCompletion {
+          fetcherCompletion(data, error as? NSError)
+        }
       }
     }
   }
 
-  internal func downloadURLFromMetadataDictionary(_ dictionary: [String: Any]) -> URL? {
+  internal func downloadURLFromMetadataDictionary(_ dictionary: [String: String]) -> URL? {
     let downloadTokens = dictionary["downloadTokens"]
-    guard let downloadTokens = downloadTokens as? String,
+    guard let downloadTokens = downloadTokens,
           downloadTokens.count > 0 else {
       return nil
     }
     let downloadTokenArray = downloadTokens.components(separatedBy: ",")
     let bucket = dictionary["bucket"] ?? "<error: missing bucket>"
-    let path = dictionary["name"] as? String ?? "<error: missing path name>"
+    let path = dictionary["name"] ?? "<error: missing path name>"
     let fullPath = "/v0/b/\(bucket)/o/\(StorageUtils.GCSEscapedString(path))"
     var components = URLComponents()
     components.scheme = reference.storage.scheme

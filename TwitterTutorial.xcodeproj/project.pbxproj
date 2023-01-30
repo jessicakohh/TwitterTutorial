@@ -44,9 +44,11 @@
 		C8DE270E29780DF40067A040 /* TweetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DE270D29780DF40067A040 /* TweetService.swift */; };
 		C8DE27102978FFFB0067A040 /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DE270F2978FFFB0067A040 /* Tweet.swift */; };
 		C8DE2712297914BE0067A040 /* TweetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8DE2711297914BD0067A040 /* TweetCell.swift */; };
+		F84908AD8ACDAE48C07064F3 /* Pods_TwitterTutorial.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BC77A44EB38E3943F3E6698 /* Pods_TwitterTutorial.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1BC77A44EB38E3943F3E6698 /* Pods_TwitterTutorial.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TwitterTutorial.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3DE69346E0636186D7393FBE /* Pods-TwitterTutorial.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TwitterTutorial.release.xcconfig"; path = "Target Support Files/Pods-TwitterTutorial/Pods-TwitterTutorial.release.xcconfig"; sourceTree = "<group>"; };
 		7D645CAAFFAECF436CAD7AD3 /* Pods-TwitterTutorial.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TwitterTutorial.debug.xcconfig"; path = "Target Support Files/Pods-TwitterTutorial/Pods-TwitterTutorial.debug.xcconfig"; sourceTree = "<group>"; };
 		C80D85EB2983C98100127757 /* UploadTweetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadTweetViewModel.swift; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F84908AD8ACDAE48C07064F3 /* Pods_TwitterTutorial.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,6 +130,7 @@
 				C87D214B2970C62F006A4531 /* TwitterTutorial */,
 				C87D214A2970C62F006A4531 /* Products */,
 				0C3F94DF2C22AD703FC697E1 /* Pods */,
+				FC4BB3629144F9C65B51569D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -226,6 +230,14 @@
 				C8A1632B2973DC0400DF473D /* RegistrationController.swift */,
 			);
 			path = Authentication;
+			sourceTree = "<group>";
+		};
+		FC4BB3629144F9C65B51569D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1BC77A44EB38E3943F3E6698 /* Pods_TwitterTutorial.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

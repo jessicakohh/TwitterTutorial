@@ -151,22 +151,28 @@ extension ProfileController: ProfileHeaderDelegate {
         if user.isCurrentUser {
             print("DEBUG : Show edit profile controller")
             return
-            
-            // 사용자를 언제 팔로우하고 언팔할지 알아야 함
-            if user.isFollowed {
-                UserService.shared.unfollowUser(uid: user.uid) { (err, ref) in
-                    self.user.isFollowed = false
-                    self.collectionView.reloadData()
-                    print("DEBUG : 백엔드에서 언팔로우 완료")
-                }
-            } else {
-                UserService.shared.followUser(uid: user.uid) { (ref, err) in
-                    self.user.isFollowed = true
-                    self.collectionView.reloadData()
-                    print("DEBUG : 백엔드에서 팔로우 완료")
-                }
+        }
+        guard let isFollowed = user.isFollowed else { return }
+        
+        // 사용자를 언제 팔로우하고 언팔할지 알아야 함
+        if isFollowed {
+            UserService.shared.unfollowUser(uid: user.uid) { err, ref in
+                self.user.isFollowed = false
+                
+                //                    header.editProfileFollowButton.setTitle("팔로우", for: .normal)
+                self.user.stats?.followers -= 1
+                self.collectionView.reloadData()
+                print("DEBUG : 백엔드에서 언팔로우 완료")
+            }
+        } else {
+            UserService.shared.followUser(uid: user.uid) { ref, err in
+                self.user.isFollowed = true
+                
+                //                    header.editProfileFollowButton.setTitle("팔로잉", for: .normal)
+                self.user.stats?.followers += 1
+                self.collectionView.reloadData()
+                print("DEBUG : 백엔드에서 팔로우 완료")
             }
         }
-        
     }
 }

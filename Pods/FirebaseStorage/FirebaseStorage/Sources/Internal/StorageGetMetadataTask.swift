@@ -44,26 +44,22 @@ internal class StorageGetMetadataTask: StorageTask, StorageTaskManagement {
    * Prepares a task and begins execution.
    */
   internal func enqueue() {
-    if let completion = taskCompletion {
-      taskCompletion = { (metadata: StorageMetadata?, error: Error?) in
-        completion(metadata, error)
-        // Reference self in completion handler in order to retain self until completion is called.
-        self.taskCompletion = nil
-      }
-    }
-    dispatchQueue.async { [weak self] in
-      guard let self = self else { return }
-      self.state = .queueing
-      var request = self.baseRequest
+    weak var weakSelf = self
+    DispatchQueue.global(qos: .background).async {
+      guard let strongSelf = weakSelf else { return }
+      strongSelf.state = .queueing
+      var request = strongSelf.baseRequest
       request.httpMethod = "GET"
-      request.timeoutInterval = self.reference.storage.maxOperationRetryTime
+      request.timeoutInterval = strongSelf.reference.storage.maxOperationRetryTime
 
-      let fetcher = self.fetcherService.fetcher(with: request)
+      let callback = strongSelf.taskCompletion
+      strongSelf.taskCompletion = nil
+
+      let fetcher = strongSelf.fetcherService.fetcher(with: request)
       fetcher.comment = "GetMetadataTask"
-      self.fetcher = fetcher
+      strongSelf.fetcher = fetcher
 
-      self.fetcherCompletion = { [weak self] (data: Data?, error: NSError?) in
-        guard let self = self else { return }
+      strongSelf.fetcherCompletion = { (data: Data?, error: NSError?) in
         var metadata: StorageMetadata?
         if let error = error {
           if self.error == nil {
@@ -79,12 +75,15 @@ internal class StorageGetMetadataTask: StorageTask, StorageTaskManagement {
             self.error = StorageErrorCode.error(withInvalidRequest: data)
           }
         }
-        self.taskCompletion?(metadata, self.error)
+        callback?(metadata, self.error)
         self.fetcherCompletion = nil
       }
 
-      self.fetcher?.beginFetch { [weak self] data, error in
-        self?.fetcherCompletion?(data, error as? NSError)
+      strongSelf.fetcher?.beginFetch { data, error in
+        let strongSelf = weakSelf
+        if let fetcherCompletion = strongSelf?.fetcherCompletion {
+          fetcherCompletion(data, error as? NSError)
+        }
       }
     }
   }

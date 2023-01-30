@@ -38,10 +38,10 @@ struct UserService {
         }
     }
     
-    func followUser(uid: String, completion: @escaping(Error?, DatabaseReference) -> Void) {
+    func followUser(uid: String, completion: @escaping(DatabaseCompletion)) {
         guard let currentUid = Auth.auth().currentUser?.uid else { return }
         
-        REF_USER_FOLLOWERS.child(currentUid).updateChildValues([uid: 1]) { (err, ref) in
+        REF_USER_FOLLOWING.child(currentUid).updateChildValues([uid: 1]) { (err, ref) in
             REF_USER_FOLLOWERS.child(uid).updateChildValues([currentUid: 1], withCompletionBlock: completion)
         }
         
@@ -52,7 +52,7 @@ struct UserService {
     func unfollowUser(uid: String, completion: @escaping(DatabaseCompletion)) {
         guard let currentUid = Auth.auth().currentUser?.uid else { return }
         
-        REF_USER_FOLLOWING.child(currentUid).child(uid).removeValue() { (err, ref) in
+        REF_USER_FOLLOWING.child(currentUid).child(uid).removeValue { (err, ref) in
             REF_USER_FOLLOWERS.child(uid).child(currentUid).removeValue(completionBlock: completion)
         }
     }
