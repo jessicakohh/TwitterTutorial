@@ -156,6 +156,12 @@ extension FeedController: TweetCellDelegate {
             // 셀의 객체를 실제로 업데이트해야 좋아요가 업데이트
             let likes = tweet.didLike ? tweet.likes - 1 : tweet.likes + 1
             cell.tweet?.likes = likes
+            
+            // 좋아요 눌렸을 때에만 알림을 업로드
+            // cell.tweet만 토글링하기 때문에 부정문
+            // 알림 구문은 트윗을 좋아요 했을 때에만 실행이 되어야함
+            guard !tweet.didLike ?? false else { return }
+            NotificationService.shared.uploadNotification(type: .like, tweet: tweet)
         }
     }
     
