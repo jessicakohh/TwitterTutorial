@@ -15,6 +15,7 @@ enum NotificationType: Int {
     case mention
 }
 
+
 struct Notification {
     let tweetID: String
     var timestamp: Date!

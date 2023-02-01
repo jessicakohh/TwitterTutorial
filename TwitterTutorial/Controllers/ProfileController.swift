@@ -138,27 +138,18 @@ extension ProfileController: UICollectionViewDelegateFlowLayout {
 // MARK: - ProfileHeaderDelegate
 
 extension ProfileController: ProfileHeaderDelegate {
-    
-    func handleDismissal() {
-        print("DEBUG : 프로파일 컨트롤러에서 프로파일 해제 처리")
-        navigationController?.popViewController(animated: true)
-    }
-    
-    
+
     func handleEditProfileFollow(_ header: ProfileHeader) {
-        print("DEBUG : 유저가 버튼을 누르기 전까지 \(user.isFollowed)를 팔로우 ")
         
         if user.isCurrentUser {
             print("DEBUG : Show edit profile controller")
             return
         }
-        guard let isFollowed = user.isFollowed else { return }
-        
         // 사용자를 언제 팔로우하고 언팔할지 알아야 함
-        if isFollowed {
+        if user.isFollowed! {
             UserService.shared.unfollowUser(uid: user.uid) { err, ref in
                 self.user.isFollowed = false
-                
+                self.collectionView.reloadData()
                 //                    header.editProfileFollowButton.setTitle("팔로우", for: .normal)
                 self.user.stats?.followers -= 1
                 self.collectionView.reloadData()
@@ -171,8 +162,16 @@ extension ProfileController: ProfileHeaderDelegate {
                 //                    header.editProfileFollowButton.setTitle("팔로잉", for: .normal)
                 self.user.stats?.followers += 1
                 self.collectionView.reloadData()
+                
+                NotificationService.shared.uploadNotification(type: .follow, user: self.user)
                 print("DEBUG : 백엔드에서 팔로우 완료")
             }
         }
     }
+    
+    func handleDismissal() {
+        print("DEBUG : 프로파일 컨트롤러에서 프로파일 해제 처리")
+        navigationController?.popViewController(animated: true)
+    }
+    
 }

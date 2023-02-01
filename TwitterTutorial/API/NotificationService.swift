@@ -10,7 +10,10 @@ import Firebase
 struct NotificationService {
     static let shared = NotificationService()
     
-    func uploadNotification(type: NotificationType, tweet: Tweet? = nil) {
+    func uploadNotification(type: NotificationType,
+                            tweet: Tweet? = nil,
+                            // 팔로우 알림을 보낼 때 특정 사용자에게 알림을 보내야 하기 때문
+                            user: User? = nil) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         var values: [String: Any] = ["timestamp": Int(NSDate().timeIntervalSince1970),
@@ -22,8 +25,8 @@ struct NotificationService {
         if let tweet = tweet {
             values["tweetID"] = tweet.tweetID
             REF_NOTIFICATION.child(tweet.user.uid).childByAutoId().updateChildValues(values)
-        } else {
-            
+        } else if let user = user {
+            REF_NOTIFICATION.child(user.uid).childByAutoId().updateChildValues(values)
         }
     }
 }
