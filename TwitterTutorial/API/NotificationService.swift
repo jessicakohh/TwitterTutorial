@@ -24,9 +24,26 @@ struct NotificationService {
         // ex) 팔로우 알림이면 좋아요에 관한 알림이 아니기 때문에 어떤 트윗을 좋아했는지에 대한 내용이 없다는 등...
         if let tweet = tweet {
             values["tweetID"] = tweet.tweetID
-            REF_NOTIFICATION.child(tweet.user.uid).childByAutoId().updateChildValues(values)
+            REF_NOTIFICATIONS.child(tweet.user.uid).childByAutoId().updateChildValues(values)
         } else if let user = user {
-            REF_NOTIFICATION.child(user.uid).childByAutoId().updateChildValues(values)
+            REF_NOTIFICATIONS.child(user.uid).childByAutoId().updateChildValues(values)
         }
     }
+    
+//    func fetchNotifications(completion: @escaping([Notification]) -> Void) {
+//        var notifications = [Notification]()
+//        guard let uid = Auth.auth().currentUser?.uid else { return }
+//        
+//        REF_NOTIFICATIONS.child(uid).observe(.childAdded) { snapshot in
+//            guard let dictionary = snapshot.value as? [String: AnyObject] else { return }
+//            guard let uid = dictionary["uid"] as? String else { return }
+//
+//            UserService.shared.fetchUsers(uid: uid) { user in
+//                let notification = Notification(user: user, dictionary: dictionary)
+//                notification.append(notification)
+//                completion(notification)
+//            }
+//        }
+    }
 }
+ 

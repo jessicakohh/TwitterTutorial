@@ -25,9 +25,9 @@ struct Notification {
     
     // 1. uid가 필요하지 않은 이유는 이 알림이 초기화 할 것이기 때문
     // 2. tweet: 옵셔널인이유는 알림에 항상 트윗이 연결되어있지 않기 때문 (예: 팔로우를 한 경우)
-    init(user: User, tweet: Tweet?, dictionary: [String: AnyObject]) {
+    init(user: User, dictionary: [String: AnyObject]) {
         self.user = user
-        self.tweet = tweet
+
         self.tweetID = dictionary["tiweetID"] as? String ?? ""
         
         if let timestamp = dictionary["timeStamp"] as? Double {
