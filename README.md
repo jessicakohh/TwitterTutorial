@@ -1,5 +1,6 @@
 # TwitterTutorial
 
+- [MVVM](https://jesskoh.notion.site/MVVM-fa3e0188f7d54dd583444a1f91d68ac2)
 ### Firebase 정리
 - [Firebase 주요 기능](https://jesskoh.notion.site/Firebase-5e8fcef80c4e4da095464bc869c19edf)
 - [Firebase Database 정리](https://jesskoh.notion.site/Firebase-Database-1fccd12d344e4d91ada3f58f09ca3db6)
