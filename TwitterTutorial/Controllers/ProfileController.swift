@@ -171,6 +171,8 @@ extension ProfileController: ProfileHeaderDelegate {
                 //                    header.editProfileFollowButton.setTitle("팔로잉", for: .normal)
                 self.user.stats?.followers += 1
                 self.collectionView.reloadData()
+                
+                NotificationService.shared.uploadNotification(type: .follow, user: self.user)
                 print("DEBUG : 백엔드에서 팔로우 완료")
             }
         }

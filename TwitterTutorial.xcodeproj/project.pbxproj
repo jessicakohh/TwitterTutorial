@@ -15,6 +15,8 @@
 		C84F8D6D2980FF0B00935699 /* TweetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84F8D6C2980FF0B00935699 /* TweetController.swift */; };
 		C84F8D6F2981156A00935699 /* TweetHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84F8D6E2981156A00935699 /* TweetHeader.swift */; };
 		C84FED4B298B67930092C397 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84FED4A298B67930092C397 /* Notification.swift */; };
+		C84FED4D298B697C0092C397 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84FED4C298B697C0092C397 /* NotificationService.swift */; };
+		C84FED4F298BA2D00092C397 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84FED4E298BA2D00092C397 /* NotificationCell.swift */; };
 		C85020B92970CB7A0022ACF0 /* MainTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85020B82970CB7A0022ACF0 /* MainTabController.swift */; };
 		C85020BB2970CD450022ACF0 /* FeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85020BA2970CD450022ACF0 /* FeedController.swift */; };
 		C85020BD2970CD880022ACF0 /* ExploreController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85020BC2970CD880022ACF0 /* ExploreController.swift */; };
@@ -60,6 +62,8 @@
 		C84F8D6C2980FF0B00935699 /* TweetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetController.swift; sourceTree = "<group>"; };
 		C84F8D6E2981156A00935699 /* TweetHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetHeader.swift; sourceTree = "<group>"; };
 		C84FED4A298B67930092C397 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		C84FED4C298B697C0092C397 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		C84FED4E298BA2D00092C397 /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
 		C85020B82970CB7A0022ACF0 /* MainTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabController.swift; sourceTree = "<group>"; };
 		C85020BA2970CD450022ACF0 /* FeedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedController.swift; sourceTree = "<group>"; };
 		C85020BC2970CD880022ACF0 /* ExploreController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreController.swift; sourceTree = "<group>"; };
@@ -185,6 +189,7 @@
 				C85C38D3297E40E6007BFD90 /* UserCell.swift */,
 				C84F8D6E2981156A00935699 /* TweetHeader.swift */,
 				C8C5933B298677AE0084A6A5 /* ActionSheetCell.swift */,
+				C84FED4E298BA2D00092C397 /* NotificationCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -211,6 +216,7 @@
 				C826B6EE29767C8100667813 /* AuthService.swift */,
 				C8AE38012977A1E100B3F371 /* UserService.swift */,
 				C8DE270D29780DF40067A040 /* TweetService.swift */,
+				C84FED4C298B697C0092C397 /* NotificationService.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -366,6 +372,7 @@
 				C87D214D2970C62F006A4531 /* AppDelegate.swift in Sources */,
 				C85C38D4297E40E6007BFD90 /* UserCell.swift in Sources */,
 				C8A1632C2973DC0400DF473D /* RegistrationController.swift in Sources */,
+				C84FED4D298B697C0092C397 /* NotificationService.swift in Sources */,
 				C8C5933C298677AE0084A6A5 /* ActionSheetCell.swift in Sources */,
 				C85020BD2970CD880022ACF0 /* ExploreController.swift in Sources */,
 				C8A1632F2973EAE400DF473D /* Utilities.swift in Sources */,
@@ -386,6 +393,7 @@
 				C84F8D6F2981156A00935699 /* TweetHeader.swift in Sources */,
 				C88235A9297B8BBF00B28AE2 /* TweetViewModel.swift in Sources */,
 				C8C5933E2986816C0084A6A5 /* ActionSheetViewModel.swift in Sources */,
+				C84FED4F298BA2D00092C397 /* NotificationCell.swift in Sources */,
 				C85020C12970CDB00022ACF0 /* ConversationController.swift in Sources */,
 				C85020BB2970CD450022ACF0 /* FeedController.swift in Sources */,
 				C85C38CE297BD0A4007BFD90 /* ProfileFilterView.swift in Sources */,
