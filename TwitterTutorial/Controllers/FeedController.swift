@@ -116,7 +116,7 @@ extension FeedController {
         // 셀에서 생성한 트윗 속성에 액세스하고 있으며 이를 다음의 요소로 설정하고 있다.
         // 트윗 데이터소스 : 0 인덱스에 하나, 인덱스에 하나, ~ ~ 이렇게 요소가 들어감
         // indexPath.row 경로를 사용하여 트윗 데이터 소스 배열에서 원하는 요소에 엑세스
-        print("DEBUG: Index path is \(indexPath.row) / 인덱스 경로")
+//        print("DEBUG: Index path is \(indexPath.row) / 인덱스 경로")
         
         // ⭐️ 이 피드 컨트롤러가 해당 프로토콜을 준수하기 때문에 위임이 self와 같다고 판단
         cell.delegate = self
@@ -160,6 +160,7 @@ extension FeedController: TweetCellDelegate {
             // 좋아요를 누를 때만 알림을 업로드
             guard !tweet.didLike else { return }
             NotificationService.shared.uploadNotification(type: .like, tweet: tweet)
+        
         }
     }
     

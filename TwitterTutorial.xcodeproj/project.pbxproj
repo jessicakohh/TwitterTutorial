@@ -39,6 +39,7 @@
 		C8A1632F2973EAE400DF473D /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A1632E2973EAE400DF473D /* Utilities.swift */; };
 		C8A163312974160100DF473D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C8A163302974160100DF473D /* GoogleService-Info.plist */; };
 		C8A70645297BBF3A00C75DDD /* ProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A70644297BBF3A00C75DDD /* ProfileHeader.swift */; };
+		C8AA3F71298BB09D00211450 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AA3F70298BB09D00211450 /* NotificationViewModel.swift */; };
 		C8AE38022977A1E100B3F371 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AE38012977A1E100B3F371 /* UserService.swift */; };
 		C8AE38042977C23E00B3F371 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AE38032977C23E00B3F371 /* User.swift */; };
 		C8C5933A298662510084A6A5 /* ActionSheetLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C59339298662510084A6A5 /* ActionSheetLauncher.swift */; };
@@ -88,6 +89,7 @@
 		C8A1632E2973EAE400DF473D /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		C8A163302974160100DF473D /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		C8A70644297BBF3A00C75DDD /* ProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeader.swift; sourceTree = "<group>"; };
+		C8AA3F70298BB09D00211450 /* NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
 		C8AE38012977A1E100B3F371 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		C8AE38032977C23E00B3F371 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		C8C59339298662510084A6A5 /* ActionSheetLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetLauncher.swift; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 				C85C38D1297DFDF7007BFD90 /* ProfileHeaderViewModel.swift */,
 				C80D85EB2983C98100127757 /* UploadTweetViewModel.swift */,
 				C8C5933D2986816C0084A6A5 /* ActionSheetViewModel.swift */,
+				C8AA3F70298BB09D00211450 /* NotificationViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -374,6 +377,7 @@
 				C8A1632C2973DC0400DF473D /* RegistrationController.swift in Sources */,
 				C84FED4D298B697C0092C397 /* NotificationService.swift in Sources */,
 				C8C5933C298677AE0084A6A5 /* ActionSheetCell.swift in Sources */,
+				C8AA3F71298BB09D00211450 /* NotificationViewModel.swift in Sources */,
 				C85020BD2970CD880022ACF0 /* ExploreController.swift in Sources */,
 				C8A1632F2973EAE400DF473D /* Utilities.swift in Sources */,
 				C84F8D6D2980FF0B00935699 /* TweetController.swift in Sources */,

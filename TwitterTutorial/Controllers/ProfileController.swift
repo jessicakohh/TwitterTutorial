@@ -152,10 +152,8 @@ extension ProfileController: ProfileHeaderDelegate {
             print("DEBUG : Show edit profile controller")
             return
         }
-        guard let isFollowed = user.isFollowed else { return }
-        
         // 사용자를 언제 팔로우하고 언팔할지 알아야 함
-        if isFollowed {
+        if user.isFollowed {
             UserService.shared.unfollowUser(uid: user.uid) { err, ref in
                 self.user.isFollowed = false
                 

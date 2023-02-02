@@ -38,28 +38,28 @@ struct ProfileHeaderViewModel {
         
     }
     
-//    var actionButtonTitle: String {
-//        // 사용자가 현재 사용자인 경우 프로필을 편집하도록 설정
-//        // 아니라면 팔로우 여부 파악
-//        if user.isCurrentUser {
-//            return "프로필 수정"
-//        }
-//
-//        if !user.isFollowed && !user.isCurrentUser {
-//            return "팔로우"
-//        }
-//
-//        if user.isFollowed {
-//            return "팔로잉"
-//        }
-//        return "로딩중"
-//    }
-//
     var actionButtonTitle: String {
-            if user.isCurrentUser { return "프로필 수정" }
-            guard let isFollwed = user.isFollowed else { return "로딩중" }
-            return isFollwed ? "팔로잉" : "팔로우"
+        // 사용자가 현재 사용자인 경우 프로필을 편집하도록 설정
+        // 아니라면 팔로우 여부 파악
+        if user.isCurrentUser {
+            return "프로필 수정"
         }
+
+        if !user.isFollowed && !user.isCurrentUser {
+            return "팔로우"
+        }
+
+        if user.isFollowed {
+            return "팔로잉"
+        }
+        return "로딩중"
+    }
+//
+//    var actionButtonTitle: String {
+//            if user.isCurrentUser { return "프로필 수정" }
+//            guard let isFollwed = user.isFollowed else { return "로딩중" }
+//            return isFollwed ? "팔로잉" : "팔로우"
+//        }
     
     init(user: User) {
         self.user = user
