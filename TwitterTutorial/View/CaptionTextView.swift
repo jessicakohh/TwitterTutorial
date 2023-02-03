@@ -41,7 +41,7 @@ class CaptionTextView: UITextView {
     
     // MARK: - Selectors
     @objc func handleTextInputChange() {
-        print("DEBUG : Hide and show placeholder / 플레이스홀더 숨기기 및 표시")
+//        print("DEBUG : Hide and show placeholder / 플레이스홀더 숨기기 및 표시")
         placeholderLabel.isHidden = !text.isEmpty
     }
 }

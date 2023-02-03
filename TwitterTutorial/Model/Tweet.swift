@@ -16,6 +16,7 @@ struct Tweet {
     let retweetCount: Int
     var user: User
     var didLike = false
+    var replyingTo: String?
     
     // 사용자와 함께 트윗을 초기화, 트윗은 사용자에게 속해야한다
     init(user: User, tweetID: String, dictionary: [String: Any]) {
@@ -28,6 +29,9 @@ struct Tweet {
         
         if let timestamp = dictionary["timestamp"] as? Double {
             self.timestamp = Date(timeIntervalSince1970: timestamp)
-        } 
+        }
+        if let replyingTo = dictionary["replyingTo"] as? String {
+            self.replyingTo = replyingTo
+        }
     }
 }

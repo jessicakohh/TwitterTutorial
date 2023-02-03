@@ -15,7 +15,7 @@ struct TweetService {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         // 본질적으로 우리가 데이터 베이스에 업로드할 내용, Firebase에서 직접 볼 수 있음
-        let values = ["uid": uid,
+        var values = ["uid": uid,
                       "timestamp": Int(NSDate().timeIntervalSince1970),
                       "likes": 0,
                       "retweets": 0,
@@ -30,6 +30,7 @@ struct TweetService {
             }
             
         case .reply(let tweet):
+            values["replyingTo"] = tweet.user.username
             REF_TWEET_REPLIES.child(tweet.tweetID).childByAutoId()
                 .updateChildValues(values) { (err, ref) in
                     guard let replyKey = ref.key else { return }
