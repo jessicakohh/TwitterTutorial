@@ -28,10 +28,10 @@ class TweetCell: UICollectionViewCell {
     
     private lazy var profileImageView: UIImageView = {
         let iv = UIImageView()
-        iv.contentMode = .scaleAspectFit
+        iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
-        iv.setDimensions(width: 48, height: 48)
-        iv.layer.cornerRadius = 48 / 2
+        iv.setDimensions(width: 40, height: 40)
+        iv.layer.cornerRadius = 40 / 2
         iv.backgroundColor = .twitterBlue
         
         // 탭 제스처 (UIImageView 버튼처럼 addTarget이 불가)

@@ -14,6 +14,7 @@ class ActionSheetCell: UITableViewCell {
     var option: ActionSheetOptions? {
         didSet { configure() }
     }
+
     
     private let optionImageView: UIImageView = {
         let iv = UIImageView()
@@ -21,6 +22,7 @@ class ActionSheetCell: UITableViewCell {
         iv.clipsToBounds = true
         iv.image = #imageLiteral(resourceName: "twitter_logo_blue")
         return iv
+
     }()
     
     private let titleLabel: UILabel = {

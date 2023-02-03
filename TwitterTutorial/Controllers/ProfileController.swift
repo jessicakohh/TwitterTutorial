@@ -13,11 +13,26 @@ private let headerIdentifier = "ProfileHeader"
 class ProfileController: UICollectionViewController {
     
     // MARK: - Properties
-    
     private var user: User
     
-    private var tweets = [Tweet]() {
+    private var selectedFilter: ProfileFilterOptions = .tweets {
         didSet { collectionView.reloadData() }
+    }
+    
+    private var tweets = [Tweet]()
+    private var likeTweets = [Tweet]()
+    private var replies = [Tweet]()
+    
+    // 1) 선택한 필터에 따라서 수정된 후 2)우리에게 올바른 데이터소스를 반환하여 궁극적으로 프로필 컨트롤러 내부에 표시
+    private var currentDataSource: [Tweet] {
+        switch selectedFilter {
+        case .tweets:
+            return tweets
+        case .replies:
+            return replies
+        case .likes:
+            return likeTweets
+        }
     }
     
     // MARK: - LifeCycle
@@ -55,8 +70,8 @@ class ProfileController: UICollectionViewController {
     // MARK: - API
     func fetchTweets() {
         TweetService.shared.fetchTweets(forUser: user) { tweets in
-            print("Tweets are \(tweets)")
             self.tweets = tweets
+            self.collectionView.reloadData()
         }
     }
     
@@ -96,13 +111,13 @@ class ProfileController: UICollectionViewController {
 
 extension ProfileController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return tweets.count
+        return self.currentDataSource.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
                                                       for: indexPath) as! TweetCell
-        cell.tweet = tweets[indexPath.row]
+        cell.tweet = currentDataSource[indexPath.row]
         return cell
     }
 }

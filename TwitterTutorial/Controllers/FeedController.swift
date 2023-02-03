@@ -80,8 +80,8 @@ class FeedController: UICollectionViewController {
         collectionView.backgroundColor = .white
         
         let imageView = UIImageView(image: UIImage(named: "twitter_logo_blue"))
-        imageView.contentMode = .scaleAspectFit
-        imageView.setDimensions(width: 44, height: 44)
+        imageView.contentMode = .scaleAspectFill
+        imageView.setDimensions(width: 40, height: 40)
         navigationItem.titleView = imageView
     }
     
@@ -92,12 +92,15 @@ class FeedController: UICollectionViewController {
         // 사용자 프로필 이미지를 로드하기 위해 실제로 발생해야 하는 일
         // 프로필 이미지를 설정하기 전에 사용자가 설정되었는지 확인해야 한다
         profileImageView.backgroundColor = .twitterBlue
+        profileImageView.contentMode = .scaleAspectFill
         profileImageView.setDimensions(width: 32, height: 32)
         profileImageView.layer.cornerRadius = 32 / 2
         profileImageView.layer.masksToBounds = true
+        profileImageView.isUserInteractionEnabled = true
         
         // 사용자 프로필 로드
         profileImageView.sd_setImage(with: user.profileImageUrl, completed: nil)
+        navigationController?.navigationBar.barStyle = .default
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: profileImageView)
     }
 }
