@@ -45,7 +45,7 @@ class ProfileHeader: UICollectionReusableView {
     
     private let profileImageView: UIImageView = {
         let iv = UIImageView()
-        iv.contentMode = .scaleAspectFit
+        iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         iv.backgroundColor = .lightGray
         iv.layer.borderColor = UIColor.white.cgColor
@@ -84,11 +84,7 @@ class ProfileHeader: UICollectionReusableView {
         return label
     }()
     
-    private let underlineView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .twitterBlue
-        return view
-    }()
+
     
     private let followingLabel: UILabel = {
         let label = UILabel()
@@ -160,9 +156,7 @@ class ProfileHeader: UICollectionReusableView {
         filterBar.anchor(left: leftAnchor, bottom: bottomAnchor,
                          right: rightAnchor, height:  50)
         
-        addSubview(underlineView)
-        underlineView.anchor(left: leftAnchor, bottom: bottomAnchor,
-                             width: frame.width / 3, height: 2)
+     
     }
     
     required init?(coder: NSCoder) {
@@ -212,11 +206,15 @@ class ProfileHeader: UICollectionReusableView {
 
 extension ProfileHeader: ProfileFilterViewDelegate {
     func filterView(_ view: ProfileFilterView, didSelect indexPath: IndexPath) {
-        guard let cell = view.collectionView.cellForItem(at: indexPath) as? ProfileFilterCell else { return }
-        
-        let xPosition = cell.frame.origin.x
-        UIView.animate(withDuration: 0.3) {
-            self.underlineView.frame.origin.x = xPosition
-        }
+//        guard let cell = view.collectionView.cellForItem(at: indexPath) as? ProfileFilterCell else { return }
+//
+//        let xPosition = cell.frame.origin.x
+//        UIView.animate(withDuration: 0.3) {
+//            self.underlineView.frame.origin.x = xPosition
+//        }
     }
 }
+
+//    addSubview(underlineView)
+//underlineView.anchor(left: leftAnchor, bottom: bottomAnchor,
+//                     width: frame.width / 3, height: 2)

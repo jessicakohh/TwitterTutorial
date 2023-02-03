@@ -33,7 +33,7 @@ class UploadTweetController: UIViewController {
     // API를 두 번 가지고 올 필요 없이 FeedController에서 UploadTweetController로 사용자 이미지를 전달
     private let profileImageView: UIImageView = {
         let iv = UIImageView()
-        iv.contentMode = .scaleAspectFit
+        iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         iv.setDimensions(width: 48, height: 48)
         iv.layer.cornerRadius = 48 / 2
