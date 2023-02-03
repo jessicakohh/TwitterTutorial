@@ -62,7 +62,26 @@ struct TweetService {
     
     func fetchTweets(forUser user: User, completion: @escaping([Tweet]) -> Void) {
         var tweets = [Tweet]()
-        REF_USER_TWEETS.child(user.uid).observe(.childAdded) { snapshot in
+        
+        // ⭐️ 내가 팔로우하는 사람들의 트윗만 다시 받을 수 있음
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        
+        REF_USER_FOLLOWING.child(currentUid).observe(.childAdded) { snapshot in
+            let followingUid = snapshot.key
+            
+            // 우리가 팔로우하는 사용자가 트윗을 올릴 때마다 자동으로 피드에 추가된다
+            REF_USER_TWEETS.child(followingUid).observe(.childAdded) { snapshot in
+                let tweetID = snapshot.key
+                
+                self.fetchTweet(withTweetID: tweetID) { tweet in
+                    tweets.append(tweet)
+                    completion(tweets)
+                }
+            }
+        }
+        
+        // 현재 사용자의 모든 트윗을 받은 다음 모든 사람 또는 그 사람의 트윗을 얻음 
+        REF_USER_TWEETS.child(currentUid).observe(.childAdded) { snapshot in
             let tweetID = snapshot.key
             
             self.fetchTweet(withTweetID: tweetID) { tweet in

@@ -41,6 +41,14 @@ class TweetCell: UICollectionViewCell {
         return iv
     }()
     
+    private let replyLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .lightGray
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.text = "➡️ replying to @moomin"
+        return label
+    }()
+    
     private let captionLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)

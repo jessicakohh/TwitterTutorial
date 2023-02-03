@@ -44,14 +44,24 @@ class FeedController: UICollectionViewController {
         navigationController?.navigationBar.isHidden = false
     }
     
+    // MARK: - Selectors
+    @objc func handleRefresh() {
+        fetchTweets()
+    }
+
     // MARK: - API
     func fetchTweets() {
+        collectionView.refreshControl?.beginRefreshing()
         TweetService.shared.fetchTweets { tweets in
             // 트윗 수 몇개
             self.tweets = tweets
             // 1. 사용자가 트윗 가져오기 기능의 완료 블록에서 트윗을 좋아하는 경우, 우리의 트윗이 이미 패치되었음을 알 수 있음
             // 2. 사용자가 해당 트윗을 좋아하는지 확인
-            self.checkIfUserLikeTweets(self.tweets)
+            self.checkIfUserLikeTweets(tweets)
+            
+            // 날짜별로 소트
+            self.tweets = tweets.sorted(by: { $0.timestamp > $1.timestamp })
+                        self.collectionView.refreshControl?.endRefreshing()
         }
     }
     
@@ -83,6 +93,10 @@ class FeedController: UICollectionViewController {
         imageView.contentMode = .scaleAspectFill
         imageView.setDimensions(width: 40, height: 40)
         navigationItem.titleView = imageView
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        collectionView.refreshControl = refreshControl
     }
     
     func configureLeftBarButton() {
@@ -109,7 +123,7 @@ class FeedController: UICollectionViewController {
 
 extension FeedController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("DEBUG: Tweet count at time of collectionView function call is \(tweets.count)")
+//        print("DEBUG: Tweet count at time of collectionView function call is \(tweets.count)")
         return tweets.count
     }
     
