@@ -20,7 +20,7 @@ struct TweetService {
                       "likes": 0,
                       "retweets": 0,
                       "caption": caption] as [String: Any]
-    
+        
         switch type {
         case .tweet:
             REF_TWEETS.childByAutoId().updateChildValues(values) { (err, ref) in
@@ -30,11 +30,16 @@ struct TweetService {
             }
             
         case .reply(let tweet):
-            REF_TWEET_REPLIES.child(tweet.tweetID).childByAutoId().updateChildValues(values, withCompletionBlock: completion)
+            REF_TWEET_REPLIES.child(tweet.tweetID).childByAutoId()
+                .updateChildValues(values) { (err, ref) in
+                    guard let replyKey = ref.key else { return }
+                    REF_USER_REPLIES.child(uid).updateChildValues([tweet.tweetID: replyKey], withCompletionBlock: completion)
+                }
         }
     }
-
-        
+    
+    
+    
     // 데이터베이스에서 트윗을 가져오기 위한 함수
     // 이 함수에 트윗배열이 있는것을 알 수 있음.
     // 모든 배열에는 개수 속성이 있어 해당 배열에 얼마나 많은 항목이 있는지 알려줌
@@ -75,6 +80,27 @@ struct TweetService {
             UserService.shared.fetchUser(uid: uid) { user in
                 let tweet = Tweet(user: user, tweetID: tweetID, dictionary: dictionary)
                 completion(tweet)
+            }
+        }
+    }
+    
+    func fetchReplies(forUser user: User, completion: @escaping([Tweet]) -> Void) {
+        var replies = [Tweet]()
+        
+        REF_USER_REPLIES.child(user.uid).observe(.childAdded) { snapshot in
+            let tweetKey = snapshot.key
+            guard let replyKey = snapshot.value as? String else { return }
+            
+            REF_TWEET_REPLIES.child(tweetKey).child(replyKey).observeSingleEvent(of: .value) { snaphot in
+                guard let dictionary = snapshot.value as? [String: Any] else { return }
+                guard let uid = dictionary["uid"] as? String else { return }
+                let replyID = snapshot.key
+                
+                UserService.shared.fetchUser(uid: uid) { user in
+                    let reply = Tweet(user: user, tweetID: replyID, dictionary: dictionary)
+                    replies.append(reply)
+                    completion(replies)
+                }
             }
         }
     }
@@ -131,6 +157,7 @@ struct TweetService {
         }
     }
     
+    
     // 사용자로 들어가서 찾아봄, 트윗ID를 찾으면 true로 완료, 그렇지 않으면 false
     func checkIfUserLikedTweet(_ tweet: Tweet, completion: @escaping(Bool) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
@@ -141,7 +168,7 @@ struct TweetService {
     }
 }
 
-    // 우리는 모든 것을 업데이트 하기 전에 사용자가 트윗을 좋아하는지 확인하고 싶지 않다.
+// 우리는 모든 것을 업데이트 하기 전에 사용자가 트윗을 좋아하는지 확인하고 싶지 않다.
 // 기본적으로 우리는 사용자가 전 트윗을 좋아하는지 확인하고, 확인해야 하도록 만드는 것을 피하고 싶다.
 // 그런 다음 사용자가 트윗을 좋아하는지 확인한다. 그렇게 하면 우리가 확인할 필요가 없기 때문 (뭔말이야)
 // 따라서 기본적으로 먼저 트윗을 가져온 다음, 모든 트윗을 가져온 후에 가져온 트윗을 확인하고 볼 것이다.

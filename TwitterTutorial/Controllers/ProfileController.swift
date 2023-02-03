@@ -51,6 +51,7 @@ class ProfileController: UICollectionViewController {
         configureCollectionView()
         fetchTweets()
         fetchLikeTweets()
+        fetchReplies()
         checkIfUserIsFollowed()
         fetchUserStats()
         
@@ -79,6 +80,12 @@ class ProfileController: UICollectionViewController {
     func fetchLikeTweets() {
         TweetService.shared.fetchLikes(forUser: user) { tweets in
             self.likeTweets = tweets
+        }
+    }
+    
+    func fetchReplies() {
+        TweetService.shared.fetchReplies(forUser: user) { tweets in
+            self.replies = tweets
         }
     }
     
@@ -158,7 +165,7 @@ extension ProfileController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: view.frame.width, height: 120)
         
         func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            let viewModel = TweetViewModel(tweet: tweets[indexPath.row])
+            let viewModel = TweetViewModel(tweet: currentDataSource[indexPath.row])
             let height = viewModel.size(forWidth: view.frame.width).height
             
             // 기본적으로 트윗 레이블의 높이를 얻은 다음 72 픽셀 추가
