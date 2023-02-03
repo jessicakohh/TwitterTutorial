@@ -50,6 +50,7 @@ class ProfileController: UICollectionViewController {
         super.viewDidLoad()
         configureCollectionView()
         fetchTweets()
+        fetchLikeTweets()
         checkIfUserIsFollowed()
         fetchUserStats()
         
@@ -75,6 +76,12 @@ class ProfileController: UICollectionViewController {
         }
     }
     
+    func fetchLikeTweets() {
+        TweetService.shared.fetchLikes(forUser: user) { tweets in
+            self.likeTweets = tweets
+        }
+    }
+    
     func checkIfUserIsFollowed() {
         UserService.shared.checkIfUsersFollowed(uid: user.uid) { isFollowed in
             self.user.isFollowed = isFollowed
@@ -95,7 +102,6 @@ class ProfileController: UICollectionViewController {
     // MARK: - Helpers
     
     func configureCollectionView() {
-        
         collectionView.backgroundColor = .white
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.register(TweetCell.self, forCellWithReuseIdentifier: reuseIdentifier)
@@ -104,6 +110,9 @@ class ProfileController: UICollectionViewController {
         collectionView.register(ProfileHeader.self,
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                                 withReuseIdentifier: headerIdentifier)
+        
+        guard let tabHeight = tabBarController?.tabBar.frame.height else { return }
+        collectionView.contentInset.bottom = tabHeight
     }
 }
 
@@ -147,6 +156,14 @@ extension ProfileController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width, height: 120)
+        
+        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+            let viewModel = TweetViewModel(tweet: tweets[indexPath.row])
+            let height = viewModel.size(forWidth: view.frame.width).height
+            
+            // 기본적으로 트윗 레이블의 높이를 얻은 다음 72 픽셀 추가
+            return CGSize(width: view.frame.width, height: height + 72)
+        }
     }
 }
 
