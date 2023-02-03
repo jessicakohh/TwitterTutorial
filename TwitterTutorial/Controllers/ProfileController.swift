@@ -147,9 +147,10 @@ extension ProfileController {
 
 extension ProfileController {
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
-                                                                     withReuseIdentifier: headerIdentifier,
-                                                                     for: indexPath) as! ProfileHeader
+        let header = collectionView
+            .dequeueReusableSupplementaryView(ofKind: kind,
+                                              withReuseIdentifier: headerIdentifier,
+                                              for: indexPath) as! ProfileHeader
         header.user = user
         header.delegate = self
         return header
@@ -201,7 +202,12 @@ extension ProfileController: ProfileHeaderDelegate {
     func handleEditProfileFollow(_ header: ProfileHeader) {
         print("DEBUG : 유저가 버튼을 누르기 전까지 \(user.isFollowed)를 팔로우 ")
         
+        // 컨트롤러가 프로필 편집 컨트롤러와 같게 하고 사용자를 전달해야 ㅎ
         if user.isCurrentUser {
+            let controller = EditProfileController(user: user)
+            let nav = UINavigationController(rootViewController: controller)
+            nav.modalPresentationStyle = .fullScreen
+            present(nav, animated: true, completion: nil)
             print("DEBUG : Show edit profile controller")
             return
         }
