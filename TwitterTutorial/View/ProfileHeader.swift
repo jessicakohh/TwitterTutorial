@@ -190,7 +190,7 @@ class ProfileHeader: UICollectionReusableView {
         guard let user = user else { return }
         let viewModel = ProfileHeaderViewModel(user: user)
         
-        print("DEBUG : Didset이 유저의 프로필 헤더를 호출")
+//        print("DEBUG : Didset이 유저의 프로필 헤더를 호출")
         
         profileImageView.sd_setImage(with: user.profileImageUrl)
         editProfileFollowButton.setTitle(viewModel.actionButtonTitle, for: .normal)

@@ -52,30 +52,29 @@ class FeedController: UICollectionViewController {
     // MARK: - API
     func fetchTweets() {
         collectionView.refreshControl?.beginRefreshing()
+        
         TweetService.shared.fetchTweets { tweets in
-            // 트윗 수 몇개
-            self.tweets = tweets
+            // 트윗 수 몇개 / 날짜별로 소트
+            self.tweets = tweets.sorted(by: { $0.timestamp > $1.timestamp })
             // 1. 사용자가 트윗 가져오기 기능의 완료 블록에서 트윗을 좋아하는 경우, 우리의 트윗이 이미 패치되었음을 알 수 있음
             // 2. 사용자가 해당 트윗을 좋아하는지 확인
-            self.checkIfUserLikeTweets(tweets)
-            
-            // 날짜별로 소트
-            self.tweets = tweets.sorted(by: { $0.timestamp > $1.timestamp })
-                        self.collectionView.refreshControl?.endRefreshing()
+            self.checkIfUserLikeTweets(self.tweets)
+            self.collectionView.refreshControl?.endRefreshing()
         }
     }
     
     // 좋아요 버튼이 계속 눌리는 것을 유지
     func checkIfUserLikeTweets(_ tweets: [Tweet]) {
         // 3. tweets.enumerated() 일 대 각 반복의 인덱스에 액세스 할 수 있음
-        for (index, tweet) in tweets.enumerated() {
+        tweets.forEach { tweet in
             // 5. checkIfUser~ API call을 통하여
             // 사용자가 트윗을 좋아하는지 확인하여 실제로 해당 트윗을 좋아했음을 알 수 있음
             TweetService.shared.checkIfUserLikedTweet(tweet) { didLike in
                 guard didLike == true else { return }
-                // 4. 데이터소스에서 속성을 업데이트하는데 사용하고 있음 (인덱스: 몇 번째 트윗인가)
-                // 6. 모든 조건이 충족되면 self 라고 말할 것, 그 트윗은 좋아요가 눌린 index를 보게 됨
-                self.tweets[index].didLike = true
+            
+                if let index = tweets.firstIndex(where: { $0.tweetID == tweet.tweetID}) {
+                    self.tweets[index].didLike = true
+                }
             }
         }
     }
