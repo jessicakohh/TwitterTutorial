@@ -45,12 +45,12 @@ class EditProfileHeader: UIView {
         backgroundColor = .twitterBlue
         
         addSubview(profileImageView)
-        profileImageView.center(inView: self, yConstant: 10)
+        profileImageView.center(inView: self, yConstant: -16)
         profileImageView.setDimensions(width: 100, height: 100)
         profileImageView.layer.cornerRadius = 100 / 2
         
         addSubview(changePhotoButton)
-        changePhotoButton.centerX(inView: self,topAnchor: profileImageView.bottomAnchor, paddingTop: 5)
+        changePhotoButton.centerX(inView: self,topAnchor: profileImageView.bottomAnchor, paddingTop: 8)
         profileImageView.sd_setImage(with: user.profileImageUrl)
     }
     

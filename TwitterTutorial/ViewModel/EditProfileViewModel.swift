@@ -21,4 +21,34 @@ case bio
     }
 }
 
-
+struct EditProfileViewModel {
+    
+    private let user: User
+    let option: EditProfileOptions
+    
+    var titleText: String {
+        return option.description
+    }
+    
+    var optionValue: String? {
+        switch option {
+        case .username: return user.username
+        case .fullname: return user.fullname
+        case .bio: return user.bio
+        }
+    }
+    
+    // 기본적으로 옵션이 바이오와 같으면 텍스트 필드를 숨김
+    var shouldHideTextField: Bool {
+        return option == .bio
+    }
+    
+    var shouldHidTextView: Bool {
+        return option != .bio
+    }
+    
+    init(user: User, option: EditProfileOptions) {
+        self.user = user
+        self.option = option
+    }
+}
