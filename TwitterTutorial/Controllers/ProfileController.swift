@@ -205,6 +205,7 @@ extension ProfileController: ProfileHeaderDelegate {
         // 컨트롤러가 프로필 편집 컨트롤러와 같게 하고 사용자를 전달해야 ㅎ
         if user.isCurrentUser {
             let controller = EditProfileController(user: user)
+            controller.delegate = self
             let nav = UINavigationController(rootViewController: controller)
             nav.modalPresentationStyle = .fullScreen
             present(nav, animated: true, completion: nil)
@@ -235,3 +236,15 @@ extension ProfileController: ProfileHeaderDelegate {
         }
     }
 }
+
+
+// MARK: - EditProfileControllerDelegate
+
+extension ProfileController: EditProfileControllerDelegate {
+    func controller(_ controller: EditProfileController, wantsToUpdate user: User) {
+        controller.dismiss(animated: true, completion: nil)
+        self.user = user
+        self.collectionView.reloadData()
+    }
+}
+
