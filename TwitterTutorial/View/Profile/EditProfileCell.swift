@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol EditProfileCellDelegate: class {
+    func updateUserInfo(_ cell: EditProfileCell)
+}
+
 class EditProfileCell: UITableViewCell {
     
     // MARK: - properties
@@ -14,6 +18,8 @@ class EditProfileCell: UITableViewCell {
     var viewModel: EditProfileViewModel? {
         didSet { configure() }
     }
+    
+    weak var delegate: EditProfileCellDelegate?
 
     let titleLabel: UILabel = {
         let label = UILabel()
@@ -56,6 +62,11 @@ class EditProfileCell: UITableViewCell {
 
         contentView.addSubview(bioTextView)
         bioTextView.anchor(top: topAnchor, left: titleLabel.rightAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 4, paddingLeft: 14, paddingRight: 8)
+        
+        // 옵저버에게 텍스트 편집 세션이 종료되었음을 알림
+        NotificationCenter.default.addObserver(self, selector: #selector(handleTextInputChange),
+                                               name: UITextView.textDidEndEditingNotification,
+                                               object: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -65,6 +76,10 @@ class EditProfileCell: UITableViewCell {
     // MARK: - Selectors
     
     @objc func handleUpdateUserInfo() {
+        delegate?.updateUserInfo(self)
+    }
+    
+    @objc func handleTextInputChange() {
         
     }
     

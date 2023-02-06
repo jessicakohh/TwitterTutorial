@@ -10,9 +10,9 @@ import Firebase
 
 // 데이터베이스에서 볼 수 있는 모든 속성 제공
 struct User {
-    let fullname: String
+    var fullname: String
     let email: String
-    let username: String
+    var username: String
     var profileImageUrl: URL?
     let uid: String
     var isFollowed = false
