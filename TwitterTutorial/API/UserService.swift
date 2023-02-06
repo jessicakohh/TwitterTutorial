@@ -33,7 +33,7 @@ struct UserService {
             let user = User(uid: uid, dictionary: dictionary)
             users.append(user)
             completion(users)
-
+            
             print(snapshot)
         }
     }
@@ -66,12 +66,12 @@ struct UserService {
         }
     }
     
-//    func fetchUserStats() {
-//        UserService.shared.fetchUserStates(uid: user.uid) { stats in
-//            print("DEBUG : 유저는 \(stats.followers)의 팔로워이다")
-//            print("DEBUG : 유저는 \(stats.following)를 팔로우한다")
-//        }
-//    }
+    //    func fetchUserStats() {
+    //        UserService.shared.fetchUserStates(uid: user.uid) { stats in
+    //            print("DEBUG : 유저는 \(stats.followers)의 팔로워이다")
+    //            print("DEBUG : 유저는 \(stats.following)를 팔로우한다")
+    //        }
+    //    }
     
     
     // 사용자 팔로워/팔로잉 통계 업데이트
@@ -88,6 +88,26 @@ struct UserService {
         }
     }
     
+    func updateProfileImage(image: UIImage, completion: @escaping(URL?) -> Void) {
+        guard let imageData = image.jpegData(compressionQuality: 0.3) else { return }
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        let filename = NSUUID().uuidString
+        let ref = STORAGE_PROFILE_IMAGES.child(filename)
+        
+        ref.putData(imageData, metadata: nil) { (meta, error) in
+            ref.downloadURL { (url, error) in
+                guard let profileImageUrl = url?.absoluteString else { return }
+                let values = ["profileImageUrl": profileImageUrl]
+                
+                REF_USERS.child(uid).updateChildValues(values) { (err, ref) in
+                    completion(url)
+                    
+                }
+            }
+        }
+    }
+    
     func saveUserData(user: User, completion: @escaping(DatabaseCompletion)) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
@@ -98,3 +118,4 @@ struct UserService {
         REF_USERS.child(uid).updateChildValues(values, withCompletionBlock: completion)
     }
 }
+

@@ -21,9 +21,15 @@ class EditProfileController: UITableViewController {
     private let imagePicker = UIImagePickerController()
     
     // 사용자가 무엇을 변경했는지 여부에 따라 버튼을 실제로 활성화
-    private var userInfoChange = false
+    private var userInfoChanged = false
     
     weak var delegate: EditProfileControllerDelegate?
+    
+    
+    // 기본적으로 선택한 이미지에 값이 있으면 이미지가 변경되었음을 의미
+    private var imageChanged: Bool {
+        return selectedImage != nil
+    }
     
     private var selectedImage: UIImage? {
         didSet { headerView.profileImageView.image = selectedImage }
@@ -55,17 +61,41 @@ class EditProfileController: UITableViewController {
     }
     
     @objc func handleDone() {
+        view.endEditing(true)
+        guard imageChanged || userInfoChanged else { return }
+        
         updateUserData()
     }
     
     // MARK: - API
     
     func updateUserData() {
-        UserService.shared.saveUserData(user: user) { (err, ref) in
-            self.delegate?.controller(self, wantsToUpdate: self.user)
-            self.dismiss(animated: true, completion: nil)
+        if imageChanged && !userInfoChanged {
+            updateProfileImage()
+        }
+        
+        if userInfoChanged && !imageChanged {
+            UserService.shared.saveUserData(user: user) { err, ref in
+                self.delegate?.controller(self, wantsToUpdate: self.user)
+            }
+        }
+        
+        if userInfoChanged && imageChanged {
+            UserService.shared.saveUserData(user: user) { err, ref in
+                self.updateProfileImage()
+            }
         }
     }
+    
+    func updateProfileImage() {
+        guard let image = selectedImage else { return }
+        UserService.shared.updateProfileImage(image: image) { profileImageUrl in
+            self.user.profileImageUrl = profileImageUrl
+            self.delegate?.controller(self, wantsToUpdate: self.user)
+        }
+    }
+    
+    
     
     // MARK: - Helpers
     
@@ -78,10 +108,8 @@ class EditProfileController: UITableViewController {
         navigationItem.title = "Edit Profile"
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(handleCancel))
-
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(handleDone))
         
-        navigationItem.rightBarButtonItem?.isEnabled = false
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(handleDone))
     }
     
     func configureTableView() {
@@ -158,7 +186,7 @@ extension EditProfileController: UIImagePickerControllerDelegate, UINavigationCo
 extension EditProfileController: EditProfileCellDelegate {
     func updateUserInfo(_ cell: EditProfileCell) {
         guard let viewModel = cell.viewModel else { return }
-        userInfoChange = true
+        userInfoChanged = true
         navigationItem.rightBarButtonItem?.isEnabled = true
         
         switch viewModel.option {
@@ -176,6 +204,4 @@ extension EditProfileController: EditProfileCellDelegate {
         }
     }
 }
-
-
 
