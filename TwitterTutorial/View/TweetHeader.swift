@@ -31,7 +31,6 @@ class TweetHeader: UICollectionReusableView {
         iv.setDimensions(width: 48, height: 48)
         iv.layer.cornerRadius = 48 / 2
         iv.backgroundColor = .twitterBlue
-        
         // 탭 제스처 (UIImageView 버튼처럼 addTarget이 불가)
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleProfileImageTapped))
         iv.addGestureRecognizer(tap)
@@ -42,7 +41,6 @@ class TweetHeader: UICollectionReusableView {
     private let fullnameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 14)
-        label.text = "피터파커"
         return label
     }()
     
@@ -50,15 +48,15 @@ class TweetHeader: UICollectionReusableView {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = .lightGray
-        label.text = "스파이더맨"
         return label
     }()
     
     private let captionLabel: ActiveLabel = {
         let label = ActiveLabel()
-        label.font = UIFont.systemFont(ofSize: 20)
+        label.font = UIFont.systemFont(ofSize: 14)
         label.numberOfLines = 0
-        label.text = "스파이더맨의 캡션"
+        label.mentionColor = .twitterBlue
+        label.hashtagColor = .twitterBlue
         return label
     }()
     
@@ -67,7 +65,6 @@ class TweetHeader: UICollectionReusableView {
         label.textColor = .lightGray
         label.font = UIFont.systemFont(ofSize: 14)
         label.textAlignment = .left
-        label.text = "날짜 레이블"
         return label
     }()
     
@@ -79,10 +76,17 @@ class TweetHeader: UICollectionReusableView {
         return button
     }()
     
+    private let replyLabel: ActiveLabel = {
+        let label = ActiveLabel()
+        label.textColor = .lightGray
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.mentionColor = .twitterBlue
+        label.hashtagColor = .twitterBlue
+        return label
+    }()
+    
     private lazy var retweetsLabel = UILabel()
-    
     private lazy var likesLabel = UILabel()
-    
     private lazy var statsView: UIView = {
         let view = UIView()
         
@@ -143,8 +147,13 @@ class TweetHeader: UICollectionReusableView {
         labelStack.axis = .vertical
         labelStack.spacing = -6
         
-        let stack = UIStackView(arrangedSubviews: [profileImageView, labelStack])
-        stack.spacing = 12
+        let imageCaptionStack = UIStackView(arrangedSubviews: [profileImageView, labelStack])
+        imageCaptionStack.spacing = 12
+        
+        let stack = UIStackView(arrangedSubviews: [replyLabel, imageCaptionStack])
+        stack.axis = .vertical
+        stack.spacing = 8
+        stack.distribution = .fillProportionally
         
         addSubview(stack)
         stack.anchor(top: topAnchor, left: leftAnchor, paddingTop: 16, paddingLeft: 16)
@@ -162,7 +171,8 @@ class TweetHeader: UICollectionReusableView {
         optionButton.anchor(right: rightAnchor, paddingRight: 8)
         
         addSubview(statsView)
-        statsView.anchor(top: dateLabel.bottomAnchor, left: leftAnchor, right: rightAnchor,
+        statsView.anchor(top: dateLabel.bottomAnchor, left: leftAnchor,
+                         right: rightAnchor,
                          paddingTop: 12, height: 40)
         
         let actionStack = UIStackView(arrangedSubviews: [commentButton, retweetButton, likeButton, shareButton])
@@ -182,11 +192,9 @@ class TweetHeader: UICollectionReusableView {
     // MARK: - Selectors
     
     @objc func handleProfileImageTapped() {
-        print("DEBUG : 유저 프로필로 가기")
     }
     
     @objc func showActionSheet() {
-        print("DEBUG : ActionSheet 표시")
         delegate?.showActionSheet()
     }
     
@@ -212,7 +220,6 @@ class TweetHeader: UICollectionReusableView {
     
     func configure() {
         guard let tweet = tweet else { return }
-        
         let viewModel = TweetViewModel(tweet: tweet)
         
         captionLabel.text = tweet.caption
@@ -226,6 +233,9 @@ class TweetHeader: UICollectionReusableView {
         likesLabel.attributedText = viewModel.likeAttributedString
         likeButton.setImage(viewModel.likeButtonImage, for: .normal)
         likeButton.tintColor = viewModel.likeButtonTintColor
+        
+        replyLabel.isHidden = viewModel.shouldHideReplyLabel
+        replyLabel.text = viewModel.replyText
     }
     
     func createButton(withImageName imageName: String) -> UIButton {

@@ -65,7 +65,6 @@ class ActionSheetLauncher: NSObject {
     init(user: User) {
         self.user = user
         super.init()
-        
         configureTableView()
     }
     
@@ -90,14 +89,10 @@ class ActionSheetLauncher: NSObject {
     
     
     func show() {
-        print("DEBUG : Show Action sheet for user \(user.username)")
-        
         guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
         self.window = window
-        
         window.addSubview(blackView)
         blackView.frame = window.frame
-        
         window.addSubview(tableView)
         // 왜 3 * 60을 했는지 ?
         // : 우리는 테이블의 새 높이가 우리가 가진 옵션의 양과 같기를 원하기 때문
@@ -135,8 +130,9 @@ extension ActionSheetLauncher: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! ActionSheetCell
-        cell.option = viewModel.options[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? ActionSheetCell
+        cell?.option = viewModel.options[indexPath.row]
+        guard let cell = cell else { return UITableViewCell() }
         return cell
     }
 }
@@ -155,7 +151,6 @@ extension ActionSheetLauncher: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let option = viewModel.options[indexPath.row]
         // 여기에 코드를 추가하여 사람들을 팔로우 및 언팔하거나 트윗을 삭제할 수 있음
-        
         // 액션시트 애니메이션 적용
         UIView.animate(withDuration: 0.5, animations: {
             self.blackView.alpha = 0

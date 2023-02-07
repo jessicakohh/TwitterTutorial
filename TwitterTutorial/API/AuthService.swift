@@ -24,7 +24,6 @@ struct AuthService {
     static let shared = AuthService()
     
     func logUserIn(withEmail email: String, password: String, completion: @escaping(AuthDataResult?, Error?) -> Void) {
-        print("DEBUG: Email: \(email), password: \(password)")
         Auth.auth().signIn(withEmail: email, password: password, completion: completion)
     }
     
@@ -36,7 +35,6 @@ struct AuthService {
         let username = credentials.username
         let fullname = credentials.fullname
 
-        
         guard let imageData = credentials.profileImage.jpegData(compressionQuality: 0.3) else { return }
         let filename = NSUUID().uuidString
         let storageRef = STORAGE_PROFILE_IMAGES.child(filename)

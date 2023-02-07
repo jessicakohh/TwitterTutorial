@@ -82,7 +82,8 @@ extension TweetController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TweetCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? TweetCell
+        guard let cell = cell else { return UICollectionViewCell() }
         cell.tweet = replies[indexPath.row]
         return cell
     }
@@ -94,7 +95,8 @@ extension TweetController {
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
                                                                      withReuseIdentifier: headerIdentifier,
-                                                                     for: indexPath) as! TweetHeader
+                                                                     for: indexPath) as? TweetHeader
+        guard let header = header else { return UICollectionReusableView() }
         header.tweet = tweet
         header.delegate = self
         return header

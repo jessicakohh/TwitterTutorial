@@ -41,7 +41,6 @@ class NotificationCell: UITableViewCell {
         let label = UILabel()
         label.numberOfLines = 2
         label.font = UIFont.systemFont(ofSize: 14)
-        label.text = "테스트 메시지"
         return label
     }()
     
@@ -49,7 +48,6 @@ class NotificationCell: UITableViewCell {
         let button = UIButton(type: .system)
         button.setTitle("Loading", for: .normal)
         button.setTitleColor(.twitterBlue, for: .normal)
-        button.backgroundColor = .white
         button.layer.borderColor = UIColor.twitterBlue.cgColor
         button.layer.borderWidth = 2
         button.addTarget(self, action: #selector(handleFollowTapped), for: .touchUpInside)
@@ -61,6 +59,7 @@ class NotificationCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        self.selectionStyle = .none
         let stack = UIStackView(arrangedSubviews: [profileImageView, notificationLabel])
         stack.spacing = 8
         stack.alignment = .center
@@ -71,7 +70,7 @@ class NotificationCell: UITableViewCell {
         
         addSubview(followButton)
         followButton.centerY(inView: self)
-        followButton.setDimensions(width: 88, height: 32)
+        followButton.setDimensions(width: 92, height: 32)
         followButton.layer.cornerRadius = 32 / 2
         followButton.anchor(right: rightAnchor, paddingRight: 12)
     }

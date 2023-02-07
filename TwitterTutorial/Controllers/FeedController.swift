@@ -17,10 +17,7 @@ class FeedController: UICollectionViewController {
     // 1. 사용자가 설정되면 이것이 실행된다
     // 2. 모델에서 무언기를 변환했는지 확인한다
     var user: User? {
-        didSet {
-            print("DEBUG: Did set user in feed controller / FeedController에서 사용자를 설정 했습니까")
-            configureLeftBarButton()
-        }
+        didSet { configureLeftBarButton() }
     }
     
     // 뷰가 로드되자마자는 빈 배열일것임, 따라서 이 데이터 가져오기를 완료하고 결과로 이 트윗 배열을 실제로 저장하는데 시간이 걸림
@@ -40,7 +37,6 @@ class FeedController: UICollectionViewController {
     // 뒤로가기 버튼 왔다갔다 할때 네비게이션 바 항상 나타나도록
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.barStyle = .default
         navigationController?.navigationBar.isHidden = false
     }
     
@@ -65,6 +61,7 @@ class FeedController: UICollectionViewController {
     
     // 좋아요 버튼이 계속 눌리는 것을 유지
     func checkIfUserLikeTweets(_ tweets: [Tweet]) {
+        
         // 3. tweets.enumerated() 일 대 각 반복의 인덱스에 액세스 할 수 있음
         tweets.forEach { tweet in
             // 5. checkIfUser~ API call을 통하여
@@ -85,12 +82,13 @@ class FeedController: UICollectionViewController {
     func configureUI() {
         view.backgroundColor = .white
         
-        collectionView.register(TweetCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView.register(TweetCell.self,
+                                forCellWithReuseIdentifier: reuseIdentifier)
         collectionView.backgroundColor = .white
         
         let imageView = UIImageView(image: UIImage(named: "twitter_logo_blue"))
         imageView.contentMode = .scaleAspectFill
-        imageView.setDimensions(width: 40, height: 40)
+        imageView.setDimensions(width: 44, height: 44)
         navigationItem.titleView = imageView
         
         let refreshControl = UIRefreshControl()
@@ -111,6 +109,7 @@ class FeedController: UICollectionViewController {
         profileImageView.layer.masksToBounds = true
         profileImageView.isUserInteractionEnabled = true
         
+        
         // 사용자 프로필 로드
         profileImageView.sd_setImage(with: user.profileImageUrl, completed: nil)
         navigationController?.navigationBar.barStyle = .default
@@ -127,7 +126,7 @@ extension FeedController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! TweetCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? TweetCell
         
         // 셀에서 생성한 트윗 속성에 액세스하고 있으며 이를 다음의 요소로 설정하고 있다.
         // 트윗 데이터소스 : 0 인덱스에 하나, 인덱스에 하나, ~ ~ 이렇게 요소가 들어감
@@ -135,9 +134,9 @@ extension FeedController {
 //        print("DEBUG: Index path is \(indexPath.row) / 인덱스 경로")
         
         // ⭐️ 이 피드 컨트롤러가 해당 프로토콜을 준수하기 때문에 위임이 self와 같다고 판단
+        guard let cell = cell else { return UICollectionViewCell() }
         cell.delegate = self
         cell.tweet = tweets[indexPath.row]
-        
         return cell
     }
     
@@ -197,7 +196,6 @@ extension FeedController: TweetCellDelegate {
     }
     
     func handleProfileImageTapped(_ cell: TweetCell) {
-        print("DEBUG : Handle profile image tapped in controller / 컨트롤러에서 탭된 프로필 이미지")
         guard let user = cell.tweet?.user else { return }
         let controller = ProfileController(user: user)
         navigationController?.pushViewController(controller, animated: true)

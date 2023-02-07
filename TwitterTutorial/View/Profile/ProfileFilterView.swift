@@ -51,7 +51,6 @@ class ProfileFilterView: UIView {
     }
     
     override func layoutSubviews() {
-        print("DEBUG : Did layout subview")
         addSubview(underlineView)
         underlineView.anchor(left: leftAnchor, bottom: bottomAnchor,
                              width: frame.width / 3, height: 2)
@@ -71,11 +70,12 @@ extension ProfileFilterView: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ProfileFilterCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? ProfileFilterCell
         
         // 각 사례를 셀 모음으로 래핑, 인덱스 경로를 사용하여 이를 수행
         // 각 셀이 렌더링 될 때 인덱스 경로를 보면 0 1 2
         // 함수의 항목에 대한 셀에서 이 인덱스 경로에 엑세스 할 수 있음
+        guard let cell = cell else { return UICollectionViewCell() }
         let option = ProfileFilterOptions(rawValue: indexPath.row)
         cell.option = option
         
@@ -94,7 +94,6 @@ extension ProfileFilterView: UICollectionViewDelegate {
         UIView.animate(withDuration: 0.3) {
             self.underlineView.frame.origin.x = xPosition
         }
-        print("DEBUG : Delegate action to profile from filter bar")
         delegate?.filterView(self, didSelect: indexPath.row)
     }
 }

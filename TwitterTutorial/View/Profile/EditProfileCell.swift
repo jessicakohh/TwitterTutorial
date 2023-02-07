@@ -35,7 +35,6 @@ class EditProfileCell: UITableViewCell {
         tf.textColor = .twitterBlue
         // textField가 종료될 때 마다 이 Handel 업데이트 사용자 정보를 호출할 것
         tf.addTarget(self, action: #selector(handleUpdateUserInfo), for: .editingDidEnd)
-        tf.text = "테스트 유저"
         return tf
     }()
     
@@ -92,8 +91,8 @@ class EditProfileCell: UITableViewCell {
         
         infoTextField.isHidden = viewModel.shouldHideTextField
         bioTextView.isHidden = viewModel.shouldHidTextView
-        
         titleLabel.text = viewModel.titleText
+        
         infoTextField.text = viewModel.optionValue
         
         bioTextView.placeholderLabel.isHidden = viewModel.shouldHidePlaceholderLabel

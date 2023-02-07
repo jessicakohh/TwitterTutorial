@@ -33,7 +33,6 @@ class MainTabController: UITabBarController {
         button.addTarget(self, action: #selector(actionButtonTapped), for: .touchUpInside)
         return button
     }()
-    
 
     
     // MARK: - LifeCycle
@@ -44,6 +43,16 @@ class MainTabController: UITabBarController {
 //        logUserOut()
         view.backgroundColor = .twitterBlue
         authenticateUserAndConfigureUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor.systemBackground
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        tabBar.backgroundColor = .systemBackground
     }
     
     
@@ -69,12 +78,10 @@ class MainTabController: UITabBarController {
                 nav.modalPresentationStyle = .fullScreen
                 self.present(nav, animated: true, completion: nil)
             }
-            print("DEBUG: User is not logged in / 사용자가 로그인하지 않았습니다")
         } else {
             configureViewControllers()
             configureUI()
             fetchUser()
-            print("DEBUG: User is logged in / 사용자 로그인")
         }
     }
     

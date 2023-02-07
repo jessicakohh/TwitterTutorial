@@ -18,6 +18,8 @@ struct Tweet {
     var didLike = false
     var replyingTo: String?
     
+    var isReply: Bool { return replyingTo != nil }
+    
     // 사용자와 함께 트윗을 초기화, 트윗은 사용자에게 속해야한다
     init(user: User, tweetID: String, dictionary: [String: Any]) {
         self.tweetID = tweetID
@@ -30,6 +32,7 @@ struct Tweet {
         if let timestamp = dictionary["timestamp"] as? Double {
             self.timestamp = Date(timeIntervalSince1970: timestamp)
         }
+        
         if let replyingTo = dictionary["replyingTo"] as? String {
             self.replyingTo = replyingTo
         }

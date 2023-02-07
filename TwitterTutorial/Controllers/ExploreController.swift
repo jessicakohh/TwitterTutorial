@@ -13,7 +13,6 @@ class ExploreController: UITableViewController {
     
     // MARK: - Properties
     
-    
     // 1. 검색 텍스트를 기반으로
     private var users = [User]() {
         didSet { tableView.reloadData() }
@@ -33,7 +32,6 @@ class ExploreController: UITableViewController {
     
     // MARK: - LifeCycle
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -44,7 +42,6 @@ class ExploreController: UITableViewController {
     // 뒤로가기 버튼 왔다갔다 할때 네비게이션 바 항상 나타나도록
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.barStyle = .default
         navigationController?.navigationBar.isHidden = false
     }
     
@@ -91,8 +88,9 @@ extension ExploreController {
     // 검색 여부에 따라 올바른 사용자를 확보해야 함
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! UserCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? UserCell
         let user = inSearchMode ? filteredUsers[indexPath.row] : users[indexPath.row]
+        guard let cell = cell else { return UITableViewCell() }
         cell.user = user
         return cell
     }
@@ -115,9 +113,7 @@ extension ExploreController: UISearchResultsUpdating {
     // 무엇인가 입력 혹은 삭제할때마다 호출
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchText = searchController.searchBar.text else { return }
-        
         filteredUsers = users.filter({
-        $0.username.lowercased().hasPrefix(searchText.lowercased()) ||
-        $0.fullname.lowercased().hasPrefix(searchText.lowercased()) })
+            $0.username.contains(searchText) || $0.fullname.contains(searchText)})
     }
 }

@@ -47,7 +47,9 @@ class TweetCell: UICollectionViewCell {
         let label = ActiveLabel()
         label.textColor = .lightGray
         label.font = UIFont.systemFont(ofSize: 12)
+        label.numberOfLines = 0
         label.mentionColor = .twitterBlue
+        label.hashtagColor = .twitterBlue
         return label
     }()
     
@@ -148,9 +150,8 @@ class TweetCell: UICollectionViewCell {
     // MARK: - Selectors
     
     @objc func handleProfileImageTapped() {
-        print("DEBUG : Profile image tapped in cell")
        // 컬렉션뷰는 탐색에 엑세스할 수 없기 때문에 navigationController 사용 못함
-        // 컬렉션은 해당 프로필 이미지 또는 해당 프로필 컨트롤러로 이동하기 위해 컨트롤러 자체를 본다
+       // 컬렉션은 해당 프로필 이미지 또는 해당 프로필 컨트롤러로 이동하기 위해 컨트롤러 자체를 본다
         delegate?.handleProfileImageTapped(self)
     }
     
@@ -184,6 +185,9 @@ class TweetCell: UICollectionViewCell {
         
         likeButton.tintColor = viewModel.likeButtonTintColor
         likeButton.setImage(viewModel.likeButtonImage, for: .normal)
+        
+        replyLabel.isHidden = viewModel.shouldHideReplyLabel
+        replyLabel.text = viewModel.replyText
     }
     
     func configureMentionHandler() {

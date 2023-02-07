@@ -23,23 +23,20 @@ class ProfileHeader: UICollectionReusableView {
     
     // handleDismissal()에 엑세스 가능
     weak var delegate: ProfileHeaderDelegate?
-    
     private let filterBar = ProfileFilterView()
-    
     private lazy var containerView: UIView = {
         let view = UIView()
         view.backgroundColor = .twitterBlue
-        
         view.addSubview(backButton)
-        backButton.anchor(top: view.topAnchor, left: view.leftAnchor, paddingTop: 42, paddingLeft: 16)
+        backButton.anchor(top: view.topAnchor, left: view.leftAnchor,
+                          paddingTop: 42, paddingLeft: 16)
         backButton.setDimensions(width: 30, height: 30)
-        
         return view
     }()
     
     private lazy var backButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(#imageLiteral(resourceName: "baseline_arrow_back_white_24dp").withRenderingMode(.alwaysOriginal) , for: .normal)
+        button.setImage(UIImage(named: "baseline_arrow_back_white_24dp")?.withRenderingMode(.alwaysOriginal) , for: .normal)
         button.addTarget(self, action: #selector(handleDismissal), for: .touchUpInside)
         return button
     }()
@@ -48,9 +45,10 @@ class ProfileHeader: UICollectionReusableView {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
+        iv.layer.cornerRadius = 48 / 2
         iv.backgroundColor = .lightGray
         iv.layer.borderColor = UIColor.white.cgColor
-        iv.layer.borderWidth = 2
+        iv.layer.borderWidth = 4
         return iv
     }()
     
@@ -58,6 +56,7 @@ class ProfileHeader: UICollectionReusableView {
         let button = UIButton(type: .system)
         button.setTitle("Loading", for: .normal)
         button.layer.borderColor = UIColor.twitterBlue.cgColor
+        button.layer.borderWidth = 1.25
         button.setTitleColor(.twitterBlue, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         button.addTarget(self, action: #selector(handleEditProfileFollow),
@@ -89,25 +88,17 @@ class ProfileHeader: UICollectionReusableView {
     
     private let followingLabel: UILabel = {
         let label = UILabel()
-        
-        label.text = "0 팔로잉"
-        
         let followTap = UITapGestureRecognizer(target: self, action: #selector(handleFollowersTapped))
         label.isUserInteractionEnabled = true
         label.addGestureRecognizer(followTap)
-         
         return label
     }()
     
     private let followersLabel: UILabel = {
         let label = UILabel()
-        
-        label.text = "2 팔로워"
-        
         let followTap = UITapGestureRecognizer(target: self, action: #selector(handleFollowingTapped))
         label.isUserInteractionEnabled = true
         label.addGestureRecognizer(followTap)
-        
         return label
     }()
     
@@ -116,6 +107,9 @@ class ProfileHeader: UICollectionReusableView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         filterBar.delegate = self
+        addSubview(filterBar)
+        filterBar.anchor(left: leftAnchor, bottom: bottomAnchor,
+                         right: rightAnchor, height: 50)
         
         addSubview(containerView)
         containerView.anchor(top: topAnchor, left: leftAnchor,
@@ -152,12 +146,6 @@ class ProfileHeader: UICollectionReusableView {
         addSubview(followStack)
         followStack.anchor(top: userDetailStack.bottomAnchor, left: leftAnchor,
                            paddingTop: 8, paddingLeft: 12)
-        
-        addSubview(filterBar)
-        filterBar.anchor(left: leftAnchor, bottom: bottomAnchor,
-                         right: rightAnchor, height:  50)
-        
-     
     }
     
     required init?(coder: NSCoder) {
@@ -172,7 +160,7 @@ class ProfileHeader: UICollectionReusableView {
     }
     
     @objc func handleEditProfileFollow() {
-        editProfileFollowButton.isUserInteractionEnabled = false
+//        editProfileFollowButton.isUserInteractionEnabled = false
         delegate?.handleEditProfileFollow(self)
     }
     
@@ -199,8 +187,9 @@ class ProfileHeader: UICollectionReusableView {
         
         fullnameLabel.text = user.fullname
         usernameLabel.text = viewModel.usernameText
+        
+        bioLabel.text = user.bio
     }
-
 }
 
 // MARK: - ProfileFilterViewDelegate
@@ -208,7 +197,6 @@ class ProfileHeader: UICollectionReusableView {
 extension ProfileHeader: ProfileFilterViewDelegate {
     func filterView(_ view: ProfileFilterView, didSelect index: Int) {
         guard let filter = ProfileFilterOptions(rawValue: index) else { return }
-        
         print("DEBUG : delegate action from header to controller with filter \(filter.description)")
         delegate?.didSelect(filter: filter)
     }

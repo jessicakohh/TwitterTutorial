@@ -44,9 +44,6 @@ struct UserService {
         REF_USER_FOLLOWING.child(currentUid).updateChildValues([uid: 1]) { (err, ref) in
             REF_USER_FOLLOWERS.child(uid).updateChildValues([currentUid: 1], withCompletionBlock: completion)
         }
-        
-        print("DEBUG : 현재 uid \(currentUid)가 \(uid)를 팔로잉하기 시작")
-        print("DEBUG : \(currentUid)가 팔로워로써 \(uid)를 얻다")
     }
     
     func unfollowUser(uid: String, completion: @escaping(DatabaseCompletion)) {
@@ -61,7 +58,6 @@ struct UserService {
         guard let currentUid = Auth.auth().currentUser?.uid else { return }
         
         REF_USER_FOLLOWING.child(currentUid).child(uid).observeSingleEvent(of: .value) { snapshot in
-            print("DEBUG : User is followed is \(snapshot.exists())")
             completion(snapshot.exists())
         }
     }

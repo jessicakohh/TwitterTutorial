@@ -21,7 +21,6 @@ class InputTextView: UITextView {
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
         
-        backgroundColor = .white
         font = UIFont.systemFont(ofSize: 16)
         isScrollEnabled = false
         heightAnchor.constraint(equalToConstant: 100).isActive = true

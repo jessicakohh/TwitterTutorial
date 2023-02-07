@@ -10,6 +10,7 @@ import UIKit
 class LoginController: UIViewController {
     
     // MARK: - Properties
+    
     private let logoImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill

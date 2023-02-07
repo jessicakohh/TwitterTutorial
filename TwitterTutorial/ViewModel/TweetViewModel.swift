@@ -12,10 +12,8 @@
 import UIKit
 
 struct TweetViewModel {
-    
     let tweet: Tweet
     let user: User
-    
     var profileImageUrl: URL? {
         return tweet.user.profileImageUrl
     }
@@ -47,8 +45,6 @@ struct TweetViewModel {
         return attributedText(withValue: tweet.likes, text: " 마음에 들어요")
     }
     
-
-    
     var userInfoText: NSAttributedString {
         let title = NSMutableAttributedString(string: user.fullname,
                                               attributes: [.font: UIFont.boldSystemFont(ofSize: 14)])
@@ -73,11 +69,25 @@ struct TweetViewModel {
         return UIImage(named: imageName)!
     }
     
+    var shouldHideReplyLabel: Bool {
+        return !tweet.isReply
+    }
+    
+    var replyText: String? {
+        guard let replyingToUsername = tweet.replyingTo else { return nil }
+        return " replying to @\(replyingToUsername)"
+    }
+    
+    
+    // MARK: - LifeCycle
+
     init(tweet: Tweet) {
         self.tweet = tweet
         self.user = tweet.user
     }
     
+    // MARK: - Helpers
+
     // 값과 일부 텍스트를 전달한 다음 값을 사용하고 이를 사용하여 속성 문자열을 설정
     fileprivate func attributedText(withValue value: Int, text: String) -> NSAttributedString {
         let attributedTitle = NSMutableAttributedString(string: "\(value)",

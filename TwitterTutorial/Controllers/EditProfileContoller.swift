@@ -100,12 +100,18 @@ class EditProfileController: UITableViewController {
     // MARK: - Helpers
     
     func configureNavigationBar() {
-        navigationController?.navigationBar.barTintColor = .twitterBlue
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor.twitterBlue
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
         navigationController?.navigationBar.barStyle = .black
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.tintColor = .white
         
         navigationItem.title = "Edit Profile"
+        navigationItem.titleView?.tintColor = .white
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(handleCancel))
         
@@ -114,11 +120,11 @@ class EditProfileController: UITableViewController {
     
     func configureTableView() {
         tableView.tableHeaderView = headerView
-        headerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 100)
-        tableView.tableFooterView = UIView()
-        
+        headerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 180)
         headerView.delegate = self
         
+        tableView.tableFooterView = UIView()
+
         tableView.register(EditProfileCell.self, forCellReuseIdentifier: reuseIdentifier)
     }
     
@@ -137,13 +143,14 @@ extension EditProfileController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! EditProfileCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? EditProfileCell
         
-        cell.delegate = self
         
+        guard let cell = cell else { return UITableViewCell() }
         guard let option = EditProfileOptions(rawValue: indexPath.row) else { return cell }
         cell.viewModel = EditProfileViewModel(user: user, option: option)
-        
+        cell.delegate = self
+
         return cell
     }
 }

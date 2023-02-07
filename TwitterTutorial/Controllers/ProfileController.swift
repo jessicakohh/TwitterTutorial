@@ -19,11 +19,15 @@ class ProfileController: UICollectionViewController {
         didSet { collectionView.reloadData() }
     }
     
-    private var tweets = [Tweet]()
+    private var tweets = [Tweet]() {
+        didSet { collectionView.reloadData() }
+    }
+    
     private var likeTweets = [Tweet]()
     private var replies = [Tweet]()
     
-    // 1) 선택한 필터에 따라서 수정된 후 2)우리에게 올바른 데이터소스를 반환하여 궁극적으로 프로필 컨트롤러 내부에 표시
+    // 1) 선택한 필터에 따라서 수정된 후
+    // 2)우리에게 올바른 데이터소스를 반환하여 궁극적으로 프로필 컨트롤러 내부에 표시
     private var currentDataSource: [Tweet] {
         switch selectedFilter {
         case .tweets:
@@ -54,8 +58,6 @@ class ProfileController: UICollectionViewController {
         fetchReplies()
         checkIfUserIsFollowed()
         fetchUserStats()
-        
-        print("DEBUG : User is \(user.username)")
     }
     
     // 이 뷰가 나타나려고 할 때마다 네비게이션 바의 hidden 속성을 true로 설정
@@ -86,7 +88,6 @@ class ProfileController: UICollectionViewController {
     func fetchReplies() {
         TweetService.shared.fetchReplies(forUser: user) { tweets in
             self.replies = tweets
-            
             self.replies.forEach { reply in
                 print("DEBUG : Replying to \(reply.replyingTo)")
             }
@@ -104,8 +105,6 @@ class ProfileController: UICollectionViewController {
         UserService.shared.fetchUserStates(uid: user.uid) { stats in
             self.user.stats = stats
             self.collectionView.reloadData()
-            print("DEBUG : 유저는 \(stats.followers)의 팔로워이다")
-            print("DEBUG : 유저는 \(stats.following)를 팔로우한")
         }
     }
 
@@ -136,7 +135,8 @@ extension ProfileController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
-                                                      for: indexPath) as! TweetCell
+                                                      for: indexPath) as? TweetCell
+        guard let cell = cell else { return UICollectionViewCell() }
         cell.tweet = currentDataSource[indexPath.row]
         return cell
     }
@@ -150,7 +150,8 @@ extension ProfileController {
         let header = collectionView
             .dequeueReusableSupplementaryView(ofKind: kind,
                                               withReuseIdentifier: headerIdentifier,
-                                              for: indexPath) as! ProfileHeader
+                                              for: indexPath) as? ProfileHeader
+        guard let header = header else { return UICollectionReusableView() }
         header.user = user
         header.delegate = self
         return header
@@ -168,19 +169,25 @@ extension ProfileController: UICollectionViewDelegateFlowLayout {
     
     // 헤더
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 350)
+        
+        var height: CGFloat = 300
+        if user.bio != nil {
+            height += 40
+        }
+        
+        return CGSize(width: view.frame.width, height: height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 120)
         
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            let viewModel = TweetViewModel(tweet: currentDataSource[indexPath.row])
-            let height = viewModel.size(forWidth: view.frame.width).height
-            
-            // 기본적으로 트윗 레이블의 높이를 얻은 다음 72 픽셀 추가
-            return CGSize(width: view.frame.width, height: height + 72)
+        let viewModel = TweetViewModel(tweet: currentDataSource[indexPath.row])
+        var height = viewModel.size(forWidth: view.frame.width).height + 72
+        
+        // 🏁 여기 수정
+        if currentDataSource[indexPath.row].isReply {
+            height += 20
         }
+        return CGSize(width: view.frame.width, height: height)
     }
 }
 
@@ -188,28 +195,17 @@ extension ProfileController: UICollectionViewDelegateFlowLayout {
 
 extension ProfileController: ProfileHeaderDelegate {
     func didSelect(filter: ProfileFilterOptions) {
-        print("DEBUG : Did select filter \(filter.description) in profile controller")
         self.selectedFilter = filter
     }
     
-    
-    func handleDismissal() {
-        print("DEBUG : 프로파일 컨트롤러에서 프로파일 해제 처리")
-        navigationController?.popViewController(animated: true)
-    }
-    
-    
     func handleEditProfileFollow(_ header: ProfileHeader) {
-        print("DEBUG : 유저가 버튼을 누르기 전까지 \(user.isFollowed)를 팔로우 ")
-        
-        // 컨트롤러가 프로필 편집 컨트롤러와 같게 하고 사용자를 전달해야 ㅎ
+        // 컨트롤러가 프로필 편집 컨트롤러와 같게 하고 사용자를 전달해야
         if user.isCurrentUser {
             let controller = EditProfileController(user: user)
             controller.delegate = self
             let nav = UINavigationController(rootViewController: controller)
             nav.modalPresentationStyle = .fullScreen
             present(nav, animated: true, completion: nil)
-            print("DEBUG : Show edit profile controller")
             return
         }
         // 사용자를 언제 팔로우하고 언팔할지 알아야 함
@@ -218,22 +214,24 @@ extension ProfileController: ProfileHeaderDelegate {
                 self.user.isFollowed = false
                 
                 //                    header.editProfileFollowButton.setTitle("팔로우", for: .normal)
-                self.user.stats?.followers -= 1
+//                self.user.stats?.followers -= 1
                 self.collectionView.reloadData()
-                print("DEBUG : 백엔드에서 언팔로우 완료")
             }
         } else {
             UserService.shared.followUser(uid: user.uid) { ref, err in
                 self.user.isFollowed = true
-                
+    
                 //                    header.editProfileFollowButton.setTitle("팔로잉", for: .normal)
-                self.user.stats?.followers += 1
+//                self.user.stats?.followers += 1
                 self.collectionView.reloadData()
                 
                 NotificationService.shared.uploadNotification(type: .follow, user: self.user)
-                print("DEBUG : 백엔드에서 팔로우 완료")
             }
         }
+    }
+    
+    func handleDismissal() {
+        navigationController?.popViewController(animated: true)
     }
 }
 

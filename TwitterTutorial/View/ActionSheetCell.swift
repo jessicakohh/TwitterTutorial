@@ -45,6 +45,7 @@ class ActionSheetCell: UITableViewCell {
         addSubview(titleLabel)
         titleLabel.centerY(inView: self)
         titleLabel.anchor(left: optionImageView.rightAnchor, paddingLeft: 12)
+        configure()
     }
     
     required init?(coder: NSCoder) {
@@ -57,7 +58,5 @@ class ActionSheetCell: UITableViewCell {
     func configure() {
         titleLabel.text = option?.description
     }
-
-
 }
  

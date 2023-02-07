@@ -13,7 +13,6 @@ class ConversationController: UIViewController {
     
     // MARK: - LifeCycle
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()

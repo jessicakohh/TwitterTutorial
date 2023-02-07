@@ -9,7 +9,6 @@ import UIKit
 
 class UserCell: UITableViewCell {
     // MARK: - Properties
-    
     var user: User? {
         didSet { configure() }
     }
@@ -64,7 +63,6 @@ class UserCell: UITableViewCell {
     
     func configure() {
         guard let user = user else { return }
-        
         profileImageView.sd_setImage(with: user.profileImageUrl)
         usernameLabel.text = user.username
         fullnameLabel.text = user.fullname

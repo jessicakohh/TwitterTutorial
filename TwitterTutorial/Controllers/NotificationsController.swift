@@ -17,7 +17,6 @@ class NotificationsController: UITableViewController {
     
     // MARK: - LifeCycle
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -49,6 +48,8 @@ class NotificationsController: UITableViewController {
     }
     
     func checkIfUserIsFollowed(notifications: [Notification]) {
+        guard !notifications.isEmpty else { return }
+        
         for (index, notification) in notifications.enumerated() {
             if case .follow = notification.type {
                 let user = notification.user
@@ -56,6 +57,10 @@ class NotificationsController: UITableViewController {
                 UserService.shared.checkIfUsersFollowed(uid: user.uid) { isFollowed in
                     self.notifications[index].user.isFollowed = isFollowed
                 }
+                
+//                if let index = self.notifications.firstIndex(where: {$0.user.uid == notification.user.uid}) {
+//                    self.notifications[index].user.isFollowed = isFollowed
+//                }
             }
         }
     }
@@ -84,7 +89,9 @@ extension NotificationsController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! NotificationCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? NotificationCell
+        
+        guard let cell = cell else { return UITableViewCell() }
         cell.notification = notifications[indexPath.row]
         cell.delegate = self
         return cell
@@ -113,7 +120,6 @@ extension NotificationsController: NotificationCellDelegate {
     func didTapFollow(_ cell: NotificationCell) {
         
         guard let user = cell.notification?.user else { return }
-        print("DEBUG : User is followed \(user.isFollowed)")
         
         if user.isFollowed {
             UserService.shared.unfollowUser(uid: user.uid) { (err, ref) in
@@ -129,7 +135,6 @@ extension NotificationsController: NotificationCellDelegate {
     
     func didTapProfileImage(_ cell: NotificationCell) {
         guard let user = cell.notification?.user else { return }
-        
         let controller = ProfileController(user: user)
         navigationController?.pushViewController(controller, animated: true)
     }
