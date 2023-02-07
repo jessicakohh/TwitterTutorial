@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ActiveLabel
 
 class UploadTweetController: UIViewController {
     // MARK: -  Properties
@@ -68,6 +69,7 @@ class UploadTweetController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        configureNavigationBar()
     }
     
     // MARK: - Selectors
@@ -134,4 +136,5 @@ class UploadTweetController: UIViewController {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: actionButton)
     }
+    
 }

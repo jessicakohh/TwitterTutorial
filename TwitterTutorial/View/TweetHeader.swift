@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import ActiveLabel
 
 protocol TweetHeaderDelegate: class {
     func showActionSheet()
+    func handleFetchUser(withUsername username: String)
 }
 
 class TweetHeader: UICollectionReusableView {
@@ -52,8 +54,8 @@ class TweetHeader: UICollectionReusableView {
         return label
     }()
     
-    private let captionLabel: UILabel = {
-        let label = UILabel()
+    private let captionLabel: ActiveLabel = {
+        let label = ActiveLabel()
         label.font = UIFont.systemFont(ofSize: 20)
         label.numberOfLines = 0
         label.text = "스파이더맨의 캡션"
@@ -169,6 +171,8 @@ class TweetHeader: UICollectionReusableView {
         addSubview(actionStack)
         actionStack.centerX(inView: self)
         actionStack.anchor(top: statsView.bottomAnchor, paddingTop: 16)
+        
+        configureMentionHandler()
     }
     
     required init?(coder: NSCoder) {
@@ -231,6 +235,12 @@ class TweetHeader: UICollectionReusableView {
         button.setDimensions(width: 20, height: 20)
         return button
     }
-
+    
+    func configureMentionHandler() {
+        captionLabel.handleMentionTap { username in
+            self.delegate?.handleFetchUser(withUsername: username)
+        }
+    }
 
 }
+

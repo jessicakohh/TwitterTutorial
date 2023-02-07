@@ -47,7 +47,7 @@ class EditProfileCell: UITableViewCell {
         return tv
     }()
     
-    // MARK: - LifeCycle
+    // MARK: - LifeCycleㅌ4
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         

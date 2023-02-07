@@ -121,6 +121,12 @@ extension TweetController: UICollectionViewDelegateFlowLayout {
 // MARK: - TweetHeaderDelegate
 
 extension TweetController: TweetHeaderDelegate {
+    func handleFetchUser(withUsername username: String) {
+        UserService.shared.fetchUser(withUsername: username) { user in
+            let controller = ProfileController(user: user)
+            self.navigationController?.pushViewController(controller, animated: true)
+        }
+    }
     
     // 사용자가 팔로우하고 있는지 여부를 확인하고 그에 따라 옵션을 업데이트 해야한다.
     // 보여달라고 요청할 때에만 ActionSheet 활성화

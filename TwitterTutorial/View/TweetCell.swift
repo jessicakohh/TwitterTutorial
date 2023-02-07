@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ActiveLabel
 
 // ⭐️ 이해해야 할 중요한 개념 :
 // 이 함수를 구현하는 위치와 코드를 작성하는 위치
@@ -13,6 +14,7 @@ protocol TweetCellDelegate: class {
     func handleProfileImageTapped(_ cell: TweetCell)
     func handleReplyTapped(_ cell: TweetCell)
     func handleLikeTapped(_ cell: TweetCell)
+    func handleFetchUser(withUsername username: String)
 }
 
 class TweetCell: UICollectionViewCell {
@@ -41,19 +43,20 @@ class TweetCell: UICollectionViewCell {
         return iv
     }()
     
-    private let replyLabel: UILabel = {
-        let label = UILabel()
+    private let replyLabel: ActiveLabel = {
+        let label = ActiveLabel()
         label.textColor = .lightGray
         label.font = UIFont.systemFont(ofSize: 12)
-        label.text = "➡️ replying to @moomin"
+        label.mentionColor = .twitterBlue
         return label
     }()
     
-    private let captionLabel: UILabel = {
-        let label = UILabel()
+    private let captionLabel: ActiveLabel = {
+        let label = ActiveLabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.numberOfLines = 0
-        label.text = "Some test caption"
+        label.mentionColor = .twitterBlue
+        label.hashtagColor = .twitterBlue
         return label
     }()
     
@@ -135,6 +138,7 @@ class TweetCell: UICollectionViewCell {
         right: rightAnchor,
         height: 1)
         
+        configureMentionHandler()
     }
     
     required init?(coder: NSCoder) {
@@ -173,11 +177,20 @@ class TweetCell: UICollectionViewCell {
         let viewModel = TweetViewModel(tweet: tweet)
         
         captionLabel.text = tweet.caption
-        
         profileImageView.sd_setImage(with: viewModel.profileImageUrl)
+        
         infoLabel.text = tweet.user.username
         infoLabel.attributedText = viewModel.userInfoText
+        
         likeButton.tintColor = viewModel.likeButtonTintColor
         likeButton.setImage(viewModel.likeButtonImage, for: .normal)
     }
+    
+    func configureMentionHandler() {
+        captionLabel.handleMentionTap { username in
+            self.delegate?.handleFetchUser(withUsername: username)
+        }
+    }
 }
+
+
