@@ -44,6 +44,13 @@ class FeedController: UICollectionViewController {
     @objc func handleRefresh() {
         fetchTweets()
     }
+    
+    @objc func handleProfileImageTap() {
+        guard let user = user else { return }
+        let controller = ProfileController(user: user)
+        navigationController?.pushViewController(controller, animated: true)
+        print("DEBUG : show user profle")
+    }
 
     // MARK: - API
     func fetchTweets() {
@@ -68,7 +75,6 @@ class FeedController: UICollectionViewController {
             // 사용자가 트윗을 좋아하는지 확인하여 실제로 해당 트윗을 좋아했음을 알 수 있음
             TweetService.shared.checkIfUserLikedTweet(tweet) { didLike in
                 guard didLike == true else { return }
-            
                 if let index = tweets.firstIndex(where: { $0.tweetID == tweet.tweetID}) {
                     self.tweets[index].didLike = true
                 }
@@ -102,14 +108,17 @@ class FeedController: UICollectionViewController {
         let profileImageView = UIImageView()
         // 사용자 프로필 이미지를 로드하기 위해 실제로 발생해야 하는 일
         // 프로필 이미지를 설정하기 전에 사용자가 설정되었는지 확인해야 한다
+        profileImageView.setDimensions(width: 32, height: 32)
         profileImageView.backgroundColor = .twitterBlue
         profileImageView.contentMode = .scaleAspectFill
-        profileImageView.setDimensions(width: 32, height: 32)
         profileImageView.layer.cornerRadius = 32 / 2
         profileImageView.layer.masksToBounds = true
         profileImageView.isUserInteractionEnabled = true
         
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleProfileImageTap))
+        profileImageView.addGestureRecognizer(tap)
         
+
         // 사용자 프로필 로드
         profileImageView.sd_setImage(with: user.profileImageUrl, completed: nil)
         navigationController?.navigationBar.barStyle = .default
@@ -202,3 +211,4 @@ extension FeedController: TweetCellDelegate {
         navigationController?.pushViewController(controller, animated: true)
     }
 }
+
