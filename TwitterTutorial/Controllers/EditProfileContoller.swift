@@ -18,6 +18,7 @@ class EditProfileController: UITableViewController {
     // MARK: - properties
     private var user: User
     private lazy var headerView = EditProfileHeader(user: user)
+    private let footerView = EditProfileFooter()
     private let imagePicker = UIImagePickerController()
     
     // 사용자가 무엇을 변경했는지 여부에 따라 버튼을 실제로 활성화
@@ -123,7 +124,9 @@ class EditProfileController: UITableViewController {
         headerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 180)
         headerView.delegate = self
         
-        tableView.tableFooterView = UIView()
+        footerView.frame = CGRect(x: 0, y: view.frame.width, width: 50, height: 100)
+        tableView.tableFooterView = footerView
+        footerView.delegate = self
 
         tableView.register(EditProfileCell.self, forCellReuseIdentifier: reuseIdentifier)
     }
@@ -212,3 +215,9 @@ extension EditProfileController: EditProfileCellDelegate {
     }
 }
 
+
+extension EditProfileController: EditProfileFooterDelegate {
+    func handleLogout() {
+        print("DEBUG: Handle logout ..")
+    }
+}
