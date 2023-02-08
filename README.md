@@ -36,6 +36,7 @@
 ## 🐞 Bug
 - [Cannot find type 'AuthDataResultCallback' in scope 오류](https://developer.apple.com/forums/thread/706016)
 - [51강) fullname 입력 시 검색 안되는 버그](https://jesskoh.notion.site/51-fullname-373f57db9e564a4f909d1f7a36827deb)
+- [navigationBar 뒤로가기 시 안 나올 경우](https://jesskoh.notion.site/navigationBar-4f170442d80a4620864e440767487b2e)
 
 ## 강의 정리
 - [버튼을 lazy var로 선언해야 하는 이유](https://jesskoh.notion.site/lazy-var-b001ea38b0ce43f0bfbf11b163a36d40)
