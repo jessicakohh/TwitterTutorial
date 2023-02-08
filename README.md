@@ -1,5 +1,34 @@
 # TwitterTutorial
 
+### 사용 기술 & 라이브러리
+- MVVM
+- Firebase, SDWebImage
+
+### 구현 내용
+- 게시글 올리기
+- 팔로우하기
+- 좋아요 누르기
+- 사용자 검색하기
+- 좋아요, 멘션 알림 받기
+
+### 프로젝트를 진행하며 배운 점
+- 스토리보드를 사용하지 않고 코드로 UI구현
+- FirebaseAuth를 이용한 로그인과 회원가입 구현
+  - Firebase를 사용해 간단한 회원가입 및 로그인 기능을 구현할 수 있게 되었습니다.
+  - 현재 로그인 중인 상태와 로그아웃한 상태를 통해 로그인 뷰를 띄울지, 게시글 피드 뷰를 띄울지를 분기하였습니다.
+- FireStore를 통한 데이터 구조
+  - 데이터 구축, 저장, 불러오기 업데이트를 경험하였습니다.
+  - 데이터들의 이동, 흐름에 대하여 배웠습니다.
+- Delegate 패턴, MVVM 디자인패턴
+  - 이번 프로젝트에 사용해보며 익숙해지도록 하였습니다.
+- 고차함수의 활용
+  - FireStore에서 받아온 데이터를 고차함수를 이용해서 처리하는 방법을 배웠습니다.
+  - 이러한 고차함수를 이용해 로그인한 사용자의 데이터는 검색 시에 나오지 않게 구현하였으며,
+    특정 문자열을 가지고 있는 데이터는 무엇인지를 필터링하여 가져오는 등의 기능을 구현하였습니다. 
+
+
+
+---
 ### Firebase 정리
 - [Firebase 주요 기능](https://jesskoh.notion.site/Firebase-5e8fcef80c4e4da095464bc869c19edf)
 - [Firebase Database 정리](https://jesskoh.notion.site/Firebase-Database-1fccd12d344e4d91ada3f58f09ca3db6)
@@ -7,11 +36,8 @@
 - [Firebase (2) 유저등록](https://jesskoh.notion.site/Firebase-2-97b4ef263d78478fa6ede2e69488bc23)
 
 ### 🐞 Bug
-
 - [Cannot find type 'AuthDataResultCallback' in scope 오류](https://developer.apple.com/forums/thread/706016)
 - [51강) fullname 입력 시 검색 안되는 버그](https://jesskoh.notion.site/51-fullname-373f57db9e564a4f909d1f7a36827deb)
-- [54강) 유저 팔로잉 상태 체크 ➡️ 로딩 중 로직 구현]
-- [61강) Tweet Caption UI 버그수정_Dynamic Cell Sizing]
 
 ### 강의 정리
 - [버튼을 lazy var로 선언해야 하는 이유](https://jesskoh.notion.site/lazy-var-b001ea38b0ce43f0bfbf11b163a36d40)
@@ -25,3 +51,5 @@
 - [68강) ActionSheet (3)_TableView animation & FadeView](https://jesskoh.notion.site/68-ActionSheet-3-_TableView-animation-FadeView-6c2c9fb7e1014767954c7ab5bc34eb7b)
 - [69강) ActionSheet (4)_TableView Footer](https://jesskoh.notion.site/69-ActionSheet-4-_TableView-Footer-b95b45f3b8b9484f996261f53da86650)
 - [74강) 좋아요 버튼](https://jesskoh.notion.site/74-528dfdd2a628427b99b06057871e7cd7)
+
+---
